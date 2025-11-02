@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tusalvarenders.com/sitemap.txt
