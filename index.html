@@ -2,102 +2,244 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>tusalvarenders — Renders arquitectónicos profesionales</title>
+  <title>tusalvarenders — Visualizaciones 3D y arquitectura</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Renders fotorrealistas de arquitectura, interiores y urbanismo. Entregas ágiles, detalle y realismo para mejorar tus propuestas.">
-  <!-- Open Graph para compartir bonito -->
+  <meta name="description" content="Renders arquitectónicos e interiorismo con un enfoque artístico y profesional. Imágenes que comunican arquitectura con emoción.">
+
+  <!-- FAVICON -->
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+  <!-- OPEN GRAPH -->
   <meta property="og:title" content="tusalvarenders — Renders profesionales">
-  <meta property="og:description" content="Renders fotorrealistas de arquitectura e interiores.">
+  <meta property="og:description" content="Renders fotorrealistas para arquitectura e interiorismo desde Málaga.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tusalvarenders.com">
   <meta property="og:image" content="https://tusalvarenders.com/img/cover.webp">
+
+  <!-- SCHEMA -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "tusalvarenders",
+    "image": "https://tusalvarenders.com/img/cover.webp",
+    "url": "https://tusalvarenders.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Málaga",
+      "addressCountry": "ES"
+    },
+    "areaServed": "ES",
+    "description": "Renders arquitectónicos e interiorismo. Entregas ágiles, acabado fotorealista.",
+    "priceRange": "€€"
+  }
+  </script>
+
   <style>
-    :root { --bg:#0b0b0b; --fg:#f3f3f3; --muted:#b9b9b9; --accent:#7bd389; }
-    *{box-sizing:border-box} html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
-    header{position:sticky;top:0;background:rgba(11,11,11,.7);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid #1a1a1a}
-    .wrap{max-width:1100px;margin:auto;padding:24px}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{font-weight:700;letter-spacing:.5px}
-    .cta{padding:10px 16px;border:1px solid #2a2a2a;border-radius:999px}
-    .hero{padding:56px 24px 32px}
-    h1{font-size:clamp(28px,4vw,44px);margin:0 0 10px}
-    h2{font-size:clamp(22px,3vw,28px);margin:0 0 14px}
-    p.lead{color:var(--muted);max-width:60ch}
-    .grid{display:grid;gap:16px}
-    @media(min-width:700px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
-    .card{background:#121212;border:1px solid #1f1f1f;border-radius:16px;overflow:hidden}
-    .card img{display:block;width:100%;height:240px;object-fit:cover;background:#0f0f0f}
-    .card .pad{padding:14px}
-    section{padding:24px}
-    form{display:grid;gap:12px;max-width:520px}
-    input,textarea{width:100%;padding:12px 14px;border:1px solid #2a2a2a;border-radius:10px;background:#0e0e0e;color:var(--fg)}
-    button{padding:12px 16px;border:1px solid #2a2a2a;border-radius:10px;background:#141414;color:var(--fg);cursor:pointer}
-    footer{padding:28px 24px;color:#8b8b8b;border-top:1px solid #1a1a1a}
-    .muted{color:var(--muted)}
+    :root{
+      --bg:#0d0d0d; --fg:#f4f4f4; --muted:#a8a8a8;
+      --accent:#b6d4b1; --beige:#e7dfcf;
+      --radius:18px;
+      --font-title:'Playfair Display',serif;
+      --font-body:'Poppins',sans-serif;
+    }
+    /* MODO CLARO */
+    body.light{
+      --bg:#f7f6f4; --fg:#1a1a1a; --muted:#505050;
+      --accent:#3c5c3c; --beige:#cfc6b3;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{scroll-behavior:smooth}
+    body{
+      font-family:var(--font-body);
+      color:var(--fg); background:var(--bg); line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    img{width:100%;display:block;border-radius:var(--radius)}
+    /* HEADER */
+    header{position:sticky;top:0;z-index:10;background:rgba(13,13,13,.75);backdrop-filter:blur(8px);border-bottom:1px solid #1a1a1a}
+    body.light header{background:rgba(247,246,244,.8);border-bottom:1px solid #cccccc}
+    nav{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:18px 24px}
+    .brand{font-family:var(--font-title);font-size:1.4rem;letter-spacing:1px}
+    #mode-toggle{
+      cursor:pointer;font-size:1.2rem;background:none;border:1px solid var(--muted);
+      border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+      color:var(--muted);transition:all .3s ease;margin-left:10px
+    }
+    #mode-toggle:hover{color:var(--accent);border-color:var(--accent)}
+    /* CTA */
+    .cta{display:inline-block;margin-top:20px;padding:12px 18px;border:1px solid var(--accent);border-radius:14px;color:var(--fg);transition:.3s}
+    .cta:hover{background:var(--accent);color:#0d0d0d}
+    /* LAYOUT */
+    main{max-width:1100px;margin:auto;padding:60px 24px}
+    section{margin-bottom:90px;opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+    section.visible{opacity:1;transform:translateY(0)}
+    h1,h2,h3{font-family:var(--font-title);font-weight:600}
+    h1{font-size:clamp(2.4rem,5vw,3.6rem);color:var(--beige);margin-bottom:10px}
+    h2{font-size:clamp(1.8rem,4vw,2.2rem);color:var(--beige);margin-bottom:20px}
+    p.lead{color:var(--muted);max-width:600px;margin-bottom:30px}
+    .grid{display:grid;gap:24px}
+    @media(min-width:700px){.cols-2{grid-template-columns:1fr 1fr}.cols-3{grid-template-columns:repeat(3,1fr)}}
+    /* HERO */
+    .hero{text-align:center;padding:80px 0 100px}
+    .hero p{max-width:700px;margin:0 auto;color:var(--muted)}
+    /* GALERÍA */
+    .gallery img{aspect-ratio:4/3;object-fit:cover;cursor:pointer;transition:transform .4s ease}
+    .gallery img:hover{transform:scale(1.03)}
+    /* PACKS */
+    .packs{text-align:center}
+    .pack{background:#161616;padding:32px;border-radius:var(--radius);border:1px solid #2a2a2a;transition:all .3s}
+    .pack:hover{border-color:var(--accent);transform:translateY(-5px)}
+    body.light .pack{background:#efefef;border:1px solid #d5d5d5}
+    .price{font-size:1.8rem;color:var(--accent);margin:10px 0 20px}
+    ul.features{list-style:none;color:var(--muted);font-size:.95rem;line-height:1.7}
+    /* SOBRE MÍ */
+    .about{text-align:center;color:var(--muted)}
+    .about img{border-radius:50%;width:140px;height:140px;margin-bottom:20px}
+    /* CONTACTO */
+    form{max-width:520px;margin:auto;display:grid;gap:14px}
+    input,textarea,button{border:none;padding:14px 16px;border-radius:var(--radius);background:#1a1a1a;color:var(--fg);font-family:inherit}
+    body.light input,body.light textarea{background:#e5e5e5;color:#1a1a1a}
+    button{background:var(--accent);color:#0d0d0d;font-weight:600;cursor:pointer;transition:background .3s}
+    button:hover{background:var(--beige)}
+    /* LIGHTBOX */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s ease}
+    .lightbox.active{opacity:1;pointer-events:auto}
+    .lightbox img{max-width:90%;max-height:90%;border-radius:var(--radius);box-shadow:0 0 20px rgba(0,0,0,.5)}
+    .close{position:absolute;top:30px;right:40px;font-size:2rem;color:#fff;cursor:pointer}
+    footer{text-align:center;padding:40px 24px;color:var(--muted);border-top:1px solid #1e1e1e;font-size:.9rem}
+    body.light footer{border-top:1px solid #cccccc}
   </style>
 </head>
 <body>
   <header>
-    <div class="wrap nav">
+    <nav>
       <div class="brand">tusalvarenders</div>
-      <nav><a class="cta" href="#contacto">Pide presupuesto</a></nav>
-    </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a href="#galeria">Galería</a> ·
+        <a href="#packs">Packs</a> ·
+        <a href="#contacto">Contacto</a>
+        <button id="mode-toggle" aria-label="Cambiar modo claro/oscuro" title="Cambiar modo">🌙</button>
+      </div>
+    </nav>
   </header>
 
-  <main class="wrap">
+  <main>
+    <!-- HERO -->
     <section class="hero">
-      <h1>Renders fotorrealistas para arquitectura e interiorismo</h1>
-      <p class="lead">Visualización 3D con enfoque arquitectónico: exteriores, interiores y detalles constructivos. Entregas ágiles, precisión y un acabado que vende.</p>
+      <h1>Renders con alma arquitectónica</h1>
+      <p class="lead">Transformo tus proyectos en imágenes con atmósfera y detalle.  
+      Renders fotorrealistas para arquitectura, interiorismo y promoción inmobiliaria.</p>
+      <a href="#contacto" class="cta">Pedir presupuesto</a>
     </section>
 
-    <section id="portfolio">
-      <h2>Trabajos recientes</h2>
-      <div class="grid cols-3">
-        <article class="card">
-          <img src="img/Sección diurna de El Viaje de Chihiro.webp" alt="Vivienda unifamiliar — vista exterior" loading="lazy" width="800" height="600">
-          <div class="pad"><strong>Vivienda unifamiliar</strong><br><span class="muted">Exteriores · Málaga</span></div>
-        </article>
-        <article class="card">
-          <img src="img/render-02.webp" alt="Lobby de hotel — iluminación cálida" loading="lazy" width="800" height="600">
-          <div class="pad"><strong>Lobby hotel</strong><br><span class="muted">Interiores · Concept</span></div>
-        </article>
-        <article class="card">
-          <img src="img/render-03.webp" alt="Conjunto residencial — atardecer" loading="lazy" width="800" height="600">
-          <div class="pad"><strong>Residencial</strong><br><span class="muted">Exteriores · Atardecer</span></div>
-        </article>
+    <!-- GALERÍA -->
+    <section id="galeria">
+      <h2>Galería</h2>
+      <div class="grid cols-3 gallery">
+        <img src="Sección diurna de El Viaje de Chihiro.webp" alt="Render de fachada minimalista" width="1600" height="1200" loading="lazy">
+        <img src="Sección nocturna de El Viaje de Chihiro.webp" alt="Render de interior con luz cálida" width="1600" height="1200" loading="lazy">
+        <img src="Sección técnica de El Viaje de Chihiro.webp" alt="Render de conjunto residencial" width="1600" height="1200" loading="lazy">
       </div>
     </section>
 
-    <section id="servicios">
-      <h2>Servicios</h2>
-      <ul>
-        <li>Renders exteriores e interiores (arquitectura, inmobiliaria, concursos).</li>
-        <li>Renders de detalle y materialidad (acabados, iluminación, mobiliario).</li>
-        <li>Postproducción y optimización para web y dosieres comerciales.</li>
-      </ul>
+    <!-- PACKS -->
+    <section id="packs" class="packs">
+      <h2>Packs de precios</h2>
+      <p class="lead">Elige la opción que mejor se adapta a tus necesidades.  
+      Todos los renders incluyen postproducción y corrección de color.</p>
+      <div class="grid cols-3">
+        <div class="pack">
+          <h3>Pack Básico</h3>
+          <div class="price">90 € / imagen</div>
+          <ul class="features">
+            <li>Modelo 3D base</li><li>Iluminación natural simple</li><li>1 revisión incluida</li><li>Plazo medio: 3 días</li>
+          </ul>
+        </div>
+        <div class="pack">
+          <h3>Pack Profesional</h3>
+          <div class="price">150 € / imagen</div>
+          <ul class="features">
+            <li>Texturizado avanzado</li><li>Postproducción detallada</li><li>2 revisiones incluidas</li><li>Plazo medio: 4-5 días</li>
+          </ul>
+        </div>
+        <div class="pack">
+          <h3>Pack Premium</h3>
+          <div class="price">250 € / imagen</div>
+          <ul class="features">
+            <li>Escenas completas con mobiliario</li><li>Iluminación HDRI y ambiente artístico</li><li>Render 4K y 3 revisiones</li><li>Plazo medio: 1 semana</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
+    <!-- SOBRE MÍ -->
+    <section id="sobre" class="about">
+      <h2>Sobre mí</h2>
+      <img src="img/virgy-avatar.webp" alt="Virginia Fernández Salva — delineante y técnica en edificación">
+      <p>Soy Virginia Fernández Salva, delineante y técnica en proyectos de edificación.  
+      Combino precisión técnica y sensibilidad visual para crear renders que comuniquen arquitectura con emoción.</p>
+    </section>
+
+    <!-- CONTACTO -->
     <section id="contacto">
       <h2>Contacto</h2>
-      <!-- Formspree (sustituye TU_ENDPOINT) -->
       <form action="https://formspree.io/f/TU_ENDPOINT" method="POST">
-        <input name="nombre" placeholder="Nombre" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="mensaje" rows="5" placeholder="Cuéntame tu proyecto…" required></textarea>
-        <button type="submit">Enviar</button>
-        <small class="muted">Respuesta en 24–48 h. También disponible por WhatsApp si lo prefieres.</small>
+        <input type="text" name="nombre" aria-label="Nombre" placeholder="Tu nombre" required>
+        <input type="email" name="email" aria-label="Correo" placeholder="Tu correo" required>
+        <textarea name="mensaje" rows="5" aria-label="Mensaje" placeholder="Cuéntame tu proyecto..." required></textarea>
+        <button type="submit">Enviar mensaje</button>
+        <input type="hidden" name="_subject" value="Nuevo contacto desde tusalvarenders.com">
       </form>
     </section>
   </main>
 
-  <footer>
-    <div class="wrap">
-      © <span id="y"></span> tusalvarenders · Málaga · <a href="#contacto">Contacto</a>
-    </div>
-  </footer>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <footer>© <span id="year"></span> tusalvarenders · Málaga</footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <span class="close" id="closeBtn">&times;</span>
+    <img src="" alt="imagen ampliada">
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+    },{threshold:0.15});
+    sections.forEach(s=>observer.observe(s));
+
+    const imgs = document.querySelectorAll('.gallery img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    const closeBtn = document.getElementById('closeBtn');
+    imgs.forEach(img=>{
+      img.addEventListener('click',()=>{
+        lightbox.classList.add('active');
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+      });
+    });
+    closeBtn.addEventListener('click',()=>lightbox.classList.remove('active'));
+    lightbox.addEventListener('click',e=>{ if(e.target===lightbox) lightbox.classList.remove('active'); });
+
+    // Modo claro/oscuro con memoria
+    const btn = document.getElementById('mode-toggle');
+    if(btn){
+      const saved = localStorage.getItem('theme');
+      if(saved==='light') document.body.classList.add('light');
+      btn.textContent = document.body.classList.contains('light') ? '🌞' : '🌙';
+      btn.addEventListener('click', ()=>{
+        document.body.classList.toggle('light');
+        const light = document.body.classList.contains('light');
+        btn.textContent = light ? '🌞' : '🌙';
+        localStorage.setItem('theme', light ? 'light' : 'dark');
+      });
+    }
+  </script>
 </body>
 </html>
-
-
