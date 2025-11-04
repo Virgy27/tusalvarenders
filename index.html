@@ -759,63 +759,272 @@
       </div>
     </section>
 
+    <section id="precios">
+      <div class="section-header">
+        <p class="section-subtitle">Inversión</p>
+        <h2 class="section-title">Packs de Precios</h2>
+        <p class="section-description">Soluciones adaptadas a cada tipo de proyecto y presupuesto</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>Básico</h3>
+          <div class="pricing-price">90€ <span>/ imagen</span></div>
+          <p class="pricing-description">Ideal para proyectos sencillos</p>
+          <ul class="pricing-features">
+            <li>Modelo 3D base</li>
+            <li>Iluminación natural</li>
+            <li>1 revisión incluida</li>
+            <li>Resolución Full HD</li>
+            <li>Entrega en 3 días</li>
+          </ul>
+          <a href="#calculadora" class="btn btn-secondary">Calcular</a>
+        </div>
+        <div class="pricing-card featured">
+          <span class="pricing-badge">Más popular</span>
+          <h3>Profesional</h3>
+          <div class="pricing-price">150€ <span>/ imagen</span></div>
+          <p class="pricing-description">El equilibrio perfecto</p>
+          <ul class="pricing-features">
+            <li>Texturizado avanzado</li>
+            <li>Iluminación profesional</li>
+            <li>2 revisiones incluidas</li>
+            <li>Postproducción detallada</li>
+            <li>Entrega en 4-5 días</li>
+          </ul>
+          <a href="#calculadora" class="btn btn-primary">Calcular</a>
+        </div>
+        <div class="pricing-card">
+          <h3>Premium</h3>
+          <div class="pricing-price">250€ <span>/ imagen</span></div>
+          <p class="pricing-description">Máxima calidad</p>
+          <ul class="pricing-features">
+            <li>Escenas completas</li>
+            <li>Mobiliario y decoración</li>
+            <li>3 revisiones incluidas</li>
+            <li>Render 4K</li>
+            <li>Entrega en 1 semana</li>
+          </ul>
+          <a href="#calculadora" class="btn btn-secondary">Calcular</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculadora" style="background: var(--bg-secondary);">
+      <div class="section-header">
+        <p class="section-subtitle">Presupuesto</p>
+        <h2 class="section-title">Calculadora de Precio</h2>
+        <p class="section-description">Calcula el presupuesto aproximado de tu proyecto</p>
+      </div>
+      <div class="calculator-container">
+        <div class="calculator-form">
+          <div class="form-group">
+            <label>Tipo de servicio</label>
+            <select id="serviceType">
+              <option value="">Selecciona un servicio</option>
+              <option value="levantamiento">Levantamiento 3D SketchUp</option>
+              <option value="imagen-basico">Render Imagen - Básico</option>
+              <option value="imagen-pro">Render Imagen - Profesional</option>
+              <option value="imagen-premium">Render Imagen - Premium</option>
+              <option value="video">Render Vídeo</option>
+            </select>
+          </div>
+          <div class="form-group" id="quantityGroup" style="display: none;">
+            <label id="quantityLabel">Cantidad</label>
+            <input type="number" id="quantity" min="1" value="1">
+          </div>
+          <div class="form-group" id="durationGroup" style="display: none;">
+            <label>Duración del vídeo (segundos)</label>
+            <input type="number" id="duration" min="10" max="180" value="30" step="10">
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="postproduction">
+              Postproducción avanzada en Photoshop
+            </label>
+          </div>
+          <div class="calculator-result">
+            <div class="result-label">Presupuesto estimado:</div>
+            <div class="result-price" id="totalPrice">0€</div>
+            <p class="result-note">*Precio orientativo. Presupuesto final tras análisis del proyecto.</p>
+          </div>
+          <a href="#contacto" class="btn btn-primary" style="width: 100%; justify-content: center;">Solicitar presupuesto</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonios">
+      <div class="section-header">
+        <p class="section-subtitle">Opiniones</p>
+        <h2 class="section-title">Lo que dicen mis clientes</h2>
+        <p class="section-description">Experiencias reales de arquitectos, promotores y particulares</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Virginia transformó nuestro proyecto en imágenes increíbles. Los renders fueron clave para conseguir la aprobación de nuestros clientes. Profesionalidad y calidad máxima."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JM</div>
+            <div>
+              <div class="author-name">Juan Martínez</div>
+              <div class="author-role">Arquitecto</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Necesitábamos renders para vender viviendas sobre plano. El resultado superó nuestras expectativas. Servicio rápido y atención excelente."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">LS</div>
+            <div>
+              <div class="author-name">Laura Sánchez</div>
+              <div class="author-role">Promotora Inmobiliaria</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Quería visualizar mi reforma antes de empezar. Los renders me ayudaron a tomar decisiones y evitar errores costosos. Totalmente recomendable."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">CR</div>
+            <div>
+              <div class="author-name">Carlos Ruiz</div>
+              <div class="author-role">Cliente Particular</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" style="background: var(--bg-secondary);">
+      <div class="section-header">
+        <p class="section-subtitle">Preguntas frecuentes</p>
+        <h2 class="section-title">Dudas Comunes</h2>
+        <p class="section-description">Todo lo que necesitas saber sobre el proceso</p>
+      </div>
+      <div class="faq-container">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>¿Qué necesito para solicitar un render?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Necesito planos en CAD (DWG, DXF) o PDF, referencias de materiales y acabados, y cualquier imagen inspiracional que tengas. Si tienes un modelo 3D existente también puedo trabajar con él.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>¿Cuánto tiempo tarda el proceso?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Depende del pack elegido: Básico (3 días), Profesional (4-5 días), Premium (1 semana). Los levantamientos 3D pueden tardar entre 2-5 días según complejidad. Los plazos empiezan tras recibir toda la documentación necesaria.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>¿Incluye revisiones?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Sí, cada pack incluye revisiones: Básico (1 revisión), Profesional (2 revisiones), Premium (3 revisiones). Las revisiones permiten ajustar detalles como iluminación, materiales, colores o puntos de vista.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>¿Trabajas con proyectos fuera de Málaga?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>¡Por supuesto! Trabajo de forma 100% online con clientes de toda España. Solo necesito la documentación digital del proyecto para empezar.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>¿Qué software utilizas?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Utilizo SketchUp para modelado 3D, V-Ray o Corona Renderer para renderizado, y Adobe Photoshop para postproducción. Esto garantiza resultados fotorrealistas de máxima calidad.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>¿Entregas el modelo 3D?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>En los levantamientos 3D sí, entrego el archivo SketchUp. En los renders de imagen, el precio incluye solo las imágenes finales. Si necesitas el modelo 3D puedes contratarlo como servicio adicional.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>¿Ofreces descuentos por volumen?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Sí, para proyectos con múltiples renders o colaboraciones continuas ofrezco condiciones especiales. Contacta conmigo para hablarlo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="contacto">
       <div class="section-header">
         <p class="section-subtitle">Hablemos</p>
         <h2 class="section-title">Contacto</h2>
         <p class="section-description">¿Tienes un proyecto en mente? Cuéntame y te preparo un presupuesto personalizado</p>
       </div>
-      <div class="contact-container">
-        <div class="contact-info">
-          <div class="contact-card">
-            <div class="contact-icon">📧</div>
-            <h3>Email</h3>
-            <a href="mailto:vfernandezsalva@gmail.com">vfernandezsalva@gmail.com</a>
-            <p class="contact-note">Respondo en menos de 24h</p>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon">📍</div>
-            <h3>Ubicación</h3>
-            <p>Málaga, Andalucía</p>
-            <p class="contact-note">Trabajo online con toda España</p>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon">💼</div>
-            <h3>LinkedIn</h3>
-            <a href="https://www.linkedin.com/in/virginiafdezsalva" target="_blank" rel="noopener">Virginia Fernández Salva</a>
-            <p class="contact-note">Conéctate profesionalmente</p>
-          </div>
+      
+      <div class="contact-info-grid">
+        <div class="contact-card">
+          <div class="contact-icon">📧</div>
+          <h3>Email</h3>
+          <a href="mailto:vfernandezsalva@gmail.com">vfernandezsalva@gmail.com</a>
+          <p class="contact-note">Respondo en menos de 24h</p>
         </div>
-        <div class="contact-form-wrapper">
-          <form class="contact-form" id="contactForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">Nombre *</label>
-                <input type="text" id="name" name="name" required>
-              </div>
-              <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" id="email" name="email" required>
-              </div>
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+          <h3>Ubicación</h3>
+          <p>Málaga, Andalucía</p>
+          <p class="contact-note">Trabajo online con toda España</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">💼</div>
+          <h3>LinkedIn</h3>
+          <a href="https://www.linkedin.com/in/virginiafdezsalva" target="_blank" rel="noopener">Virginia Fernández Salva</a>
+          <p class="contact-note">Conéctate profesionalmente</p>
+        </div>
+      </div>
+
+      <div class="contact-form-wrapper">
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nombre *</label>
+              <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-              <label for="project">Tipo de proyecto *</label>
-              <select id="project" name="project" required>
-                <option value="">Selecciona una opción</option>
-                <option value="residencial">Vivienda Residencial</option>
-                <option value="interiorismo">Interiorismo</option>
-                <option value="fachada">Fachada</option>
-                <option value="comercial">Proyecto Comercial</option>
-                <option value="otro">Otro</option>
-              </select>
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required>
             </div>
-            <div class="form-group">
-              <label for="message">Cuéntame sobre tu proyecto *</label>
-              <textarea id="message" name="message" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Enviar mensaje</button>
-          </form>
-        </div>
+          </div>
+          <div class="form-group">
+            <label for="project">Tipo de proyecto *</label>
+            <select id="project" name="project" required>
+              <option value="">Selecciona una opción</option>
+              <option value="residencial">Vivienda Residencial</option>
+              <option value="interiorismo">Interiorismo</option>
+              <option value="fachada">Fachada</option>
+              <option value="comercial">Proyecto Comercial</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Cuéntame sobre tu proyecto *</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Enviar mensaje</button>
+        </form>
       </div>
     </section>
   </main>
