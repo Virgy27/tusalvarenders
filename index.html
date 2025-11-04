@@ -60,11 +60,15 @@
   }
   </script>
 
-  <!-- Preload de la 1ª imagen para pintar antes -->
-  <!-- Asegúrate de tener estos ficheros; si no usas AVIF, puedes dejar solo WebP -->
-  <link rel="preload" as="image" href="img/seccion-diurna-chihiro-1200.webp"
-        imagesrcset="img/seccion-diurna-chihiro-800.webp 800w, img/seccion-diurna-chihiro-1200.webp 1200w, img/seccion-diurna-chihiro-1600.webp 1600w"
-        imagesizes="(min-width:700px) 33vw, 100vw">
+  <!-- Preload crítico: primera imagen -->
+  <link rel="preload" as="image" href="img/seccion-diurna-chihiro-600.webp"
+        imagesrcset="img/seccion-diurna-chihiro-600.webp 600w, img/seccion-diurna-chihiro-900.webp 900w, img/seccion-diurna-chihiro-1200.webp 1200w"
+        imagesizes="(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw">
+
+  <!-- Preconnect a CDN de fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -74,7 +78,7 @@
       --font-title:'Playfair Display',serif;
       --font-body:'Poppins',sans-serif;
 
-      /* escalas fluidas móvil → desktop */
+      /* escalas fluidas para móvil → desktop */
       --fs-hero: clamp(2rem, 6vw, 3.6rem);
       --fs-h2: clamp(1.4rem, 4.5vw, 2.2rem);
       --fs-body: clamp(0.98rem, 2.6vw, 1.05rem);
@@ -96,15 +100,40 @@
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
     img{width:100%;display:block;border-radius:var(--radius)}
+    
+    /* Placeholder para imágenes cargando */
+    .img-wrapper {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(110deg, #1a1a1a 8%, #2a2a2a 18%, #1a1a1a 33%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    body.light .img-wrapper {
+      background: linear-gradient(110deg, #e0e0e0 8%, #f0f0f0 18%, #e0e0e0 33%);
+      background-size: 200% 100%;
+    }
+    @keyframes shimmer {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+    .img-wrapper img {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .img-wrapper img.loaded {
+      opacity: 1;
+    }
 
     /* HEADER */
     header{
       position:sticky; top:0; z-index:10;
-      background:rgba(13,13,13,.75);
+      background:rgba(13,13,13,.92);
       backdrop-filter:blur(8px);
-      border-bottom:1px solid #1a1a1a
+      border-bottom:1px solid #1a1a1a;
+      will-change: transform;
     }
-    body.light header{background:rgba(247,246,244,.8);border-bottom:1px solid #cccccc}
+    body.light header{background:rgba(247,246,244,.92);border-bottom:1px solid #cccccc}
     nav{
       max-width:1100px; margin:auto;
       display:flex; justify-content:space-between; align-items:center;
@@ -150,8 +179,14 @@
 
     .grid{display:grid; gap:16px}
     .cols-3{grid-template-columns:1fr}
+    
+    /* Grid responsivo mejorado */
     @media(min-width:700px){
       .cols-2{grid-template-columns:1fr 1fr}
+      .cols-3{grid-template-columns:repeat(2,1fr)}
+      .grid{gap:20px}
+    }
+    @media(min-width:1000px){
       .cols-3{grid-template-columns:repeat(3,1fr)}
       .grid{gap:24px}
     }
@@ -160,25 +195,22 @@
     .hero{text-align:center;padding:60px 0 70px}
     .hero p{max-width:720px;margin:0 auto;color:var(--muted)}
 
-    /* GALERÍA */
-    .gallery .shot{ position:relative; overflow:hidden; }
-    .gallery img{aspect-ratio:4/3;object-fit:cover;cursor:pointer;transition:transform .3s ease}
-    .gallery img:hover{transform:scale(1.02)}
-    @media (max-width: 700px){
-      .gallery img{border-radius:14px}
+    /* GALERÍA optimizada */
+    .gallery .img-wrapper{
+      aspect-ratio:4/3;
+      border-radius:var(--radius);
     }
-
-    /* efecto blur-up (muestra un LQIP al instante y limpia al cargar) */
-    .blur-up {
-      filter: blur(12px);
-      transform: scale(1.03);
-      transition: filter .4s ease, transform .4s ease;
-      background-size: cover;
-      background-position: center;
+    .gallery img{
+      aspect-ratio:4/3;
+      object-fit:cover;
+      cursor:pointer;
+      transition:transform .3s ease;
+      will-change: transform;
     }
-    .blur-up.is-loaded {
-      filter: blur(0);
-      transform: none;
+    .gallery .img-wrapper:hover img{transform:scale(1.02)}
+    
+    @media (max-width: 699px){
+      .gallery .img-wrapper{border-radius:14px}
     }
 
     /* PACKS */
@@ -194,7 +226,19 @@
 
     /* SOBRE MÍ */
     .about{text-align:center;color:var(--muted)}
-    .about img{border-radius:50%;width:140px;height:140px;margin:0 auto 16px;object-fit:cover}
+    .about .img-wrapper{
+      border-radius:50%;
+      width:140px;
+      height:140px;
+      margin:0 auto 16px;
+      aspect-ratio:1;
+    }
+    .about img{
+      border-radius:50%;
+      width:140px;
+      height:140px;
+      object-fit:cover;
+    }
 
     /* FORMULARIO */
     form{max-width:520px;margin:auto;display:grid;gap:12px}
@@ -208,32 +252,70 @@
     button:hover{background:var(--beige)}
     input,button,textarea{min-height:48px}
 
-    /* LIGHTBOX */
-    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease}
+    /* LIGHTBOX mejorado */
+    .lightbox{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,.95);
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;pointer-events:none;
+      transition:opacity .3s ease;
+      z-index:1000;
+    }
     .lightbox.active{opacity:1;pointer-events:auto}
-    .lightbox img{max-width:92%;max-height:92%;border-radius:var(--radius);box-shadow:0 0 20px rgba(0,0,0,.5)}
-    .close{position:absolute;top:24px;right:24px;font-size:2rem;color:#fff;cursor:pointer}
+    .lightbox img{
+      max-width:90%;
+      max-height:90%;
+      border-radius:var(--radius);
+      box-shadow:0 0 40px rgba(0,0,0,.8);
+      object-fit:contain;
+    }
+    .close{
+      position:absolute;
+      top:20px;right:20px;
+      font-size:2.5rem;
+      color:#fff;
+      cursor:pointer;
+      width:50px;height:50px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,.5);
+      border-radius:50%;
+      transition:background .3s;
+    }
+    .close:hover{background:rgba(0,0,0,.8)}
 
     footer{text-align:center;padding:32px var(--pad-x);color:var(--muted);border-top:1px solid #1e1e1e;font-size:.95rem}
     body.light footer{border-top:1px solid #cccccc}
 
-    /* PERF móvil: header sin blur y nav compacto */
+    /* Optimización móvil */
     @media (max-width: 768px){
       header{
-        background:rgba(13,13,13,.92);
+        background:rgba(13,13,13,.95);
         backdrop-filter:none;
       }
       .brand{font-size:1.1rem}
-      .links{display:none}           /* ocultamos links escritorio */
-      #menu-toggle{display:flex}     /* hamburguesa */
+      .links{display:none}
+      #menu-toggle{display:flex}
       main{padding:40px var(--pad-x)}
       section{margin-bottom:60px}
+      .lightbox img{
+        max-width:95%;
+        max-height:95%;
+      }
+      .close{
+        top:10px;
+        right:10px;
+        font-size:2rem;
+        width:44px;
+        height:44px;
+      }
     }
 
-    /* REDUCE motion */
+    /* Reduce motion */
     @media (prefers-reduced-motion: reduce){
-      section{transition:none}
-      .gallery img:hover{transform:none}
+      *{transition:none !important; animation:none !important}
+      .gallery .img-wrapper:hover img{transform:none}
     }
   </style>
 </head>
@@ -242,7 +324,6 @@
     <nav>
       <div class="brand">tusalvarenders</div>
 
-      <!-- enlaces escritorio -->
       <div class="links" aria-label="Navegación principal">
         <a href="#galeria">Galería</a> ·
         <a href="#packs">Packs</a> ·
@@ -250,14 +331,12 @@
         <button id="mode-toggle" aria-label="Cambiar modo claro/oscuro" title="Cambiar modo">🌙</button>
       </div>
 
-      <!-- móvil: menú y modo -->
       <div class="links-mobile-ctas" style="display:flex; gap:10px;">
         <button id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">☰</button>
         <button id="mode-toggle-mobile" aria-label="Cambiar modo claro/oscuro" title="Cambiar modo">🌙</button>
       </div>
     </nav>
 
-    <!-- menú móvil -->
     <div id="mobile-menu" class="links--mobile" hidden>
       <a href="#galeria">Galería</a>
       <a href="#packs">Packs</a>
@@ -278,101 +357,57 @@
     <section id="galeria">
       <h2>Galería</h2>
       <div class="grid cols-3 gallery">
-        <!-- NOTA: Mantén todos los nombres en minúsculas y coloca los archivos reales en /img
-             Sube 3 tamaños por imagen (800/1200/1600). Si no tienes AVIF o JPG, elimina esas líneas y deja WebP. -->
+        
+        <!-- Imagen 1: Prioridad alta -->
+        <div class="img-wrapper">
+          <img
+            src="img/seccion-diurna-chihiro-600.webp"
+            srcset="
+              img/seccion-diurna-chihiro-600.webp 600w,
+              img/seccion-diurna-chihiro-900.webp 900w,
+              img/seccion-diurna-chihiro-1200.webp 1200w"
+            sizes="(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw"
+            alt="Render de fachada minimalista en Málaga, sección diurna"
+            width="1200" height="900"
+            decoding="async"
+            fetchpriority="high"
+            data-full="img/seccion-diurna-chihiro-1600.webp"
+          />
+        </div>
 
-        <!-- ITEM 1 -->
-        <figure class="shot">
-          <picture>
-            <!-- AVIF -->
-            <source type="image/avif"
-              srcset="
-                img/seccion-diurna-chihiro-800.avif 800w,
-                img/seccion-diurna-chihiro-1200.avif 1200w,
-                img/seccion-diurna-chihiro-1600.avif 1600w"
-              sizes="(min-width:700px) 33vw, 100vw">
-            <!-- WebP -->
-            <source type="image/webp"
-              srcset="
-                img/seccion-diurna-chihiro-800.webp 800w,
-                img/seccion-diurna-chihiro-1200.webp 1200w,
-                img/seccion-diurna-chihiro-1600.webp 1600w"
-              sizes="(min-width:700px) 33vw, 100vw">
-            <!-- Fallback IMG: usa webp si no tienes jpg -->
-            <img
-              src="img/seccion-diurna-chihiro-800.jpg"
-              srcset="
-                img/seccion-diurna-chihiro-800.jpg 800w,
-                img/seccion-diurna-chihiro-1200.jpg 1200w,
-                img/seccion-diurna-chihiro-1600.jpg 1600w"
-              sizes="(min-width:700px) 33vw, 100vw"
-              alt="Render de fachada minimalista en Málaga, sección diurna"
-              width="1600" height="1200"
-              loading="lazy" decoding="async"
-              class="blur-up"
-              data-lqip="img/seccion-diurna-chihiro-20.jpg">
-          </picture>
-        </figure>
+        <!-- Imagen 2: Lazy loading -->
+        <div class="img-wrapper">
+          <img
+            src="img/seccion-nocturna-chihiro-600.webp"
+            srcset="
+              img/seccion-nocturna-chihiro-600.webp 600w,
+              img/seccion-nocturna-chihiro-900.webp 900w,
+              img/seccion-nocturna-chihiro-1200.webp 1200w"
+            sizes="(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw"
+            alt="Render de interior con luz cálida, sección nocturna"
+            width="1200" height="900"
+            loading="lazy"
+            decoding="async"
+            data-full="img/seccion-nocturna-chihiro-1600.webp"
+          />
+        </div>
 
-        <!-- ITEM 2 -->
-        <figure class="shot">
-          <picture>
-            <source type="image/avif"
-              srcset="
-                img/seccion-nocturna-chihiro-800.avif 800w,
-                img/seccion-nocturna-chihiro-1200.avif 1200w,
-                img/seccion-nocturna-chihiro-1600.avif 1600w"
-              sizes="(min-width:700px) 33vw, 100vw">
-            <source type="image/webp"
-              srcset="
-                img/seccion-nocturna-chihiro-800.webp 800w,
-                img/seccion-nocturna-chihiro-1200.webp 1200w,
-                img/seccion-nocturna-chihiro-1600.webp 1600w"
-              sizes="(min-width:700px) 33vw, 100vw">
-            <img
-              src="img/seccion-nocturna-chihiro-800.jpg"
-              srcset="
-                img/seccion-nocturna-chihiro-800.jpg 800w,
-                img/seccion-nocturna-chihiro-1200.jpg 1200w,
-                img/seccion-nocturna-chihiro-1600.jpg 1600w"
-              sizes="(min-width:700px) 33vw, 100vw"
-              alt="Render de interior con luz cálida, sección nocturna"
-              width="1600" height="1200"
-              loading="lazy" decoding="async"
-              class="blur-up"
-              data-lqip="img/seccion-nocturna-chihiro-20.jpg">
-          </picture>
-        </figure>
-
-        <!-- ITEM 3 -->
-        <figure class="shot">
-          <picture>
-            <source type="image/avif"
-              srcset="
-                img/seccion-tecnica-chihiro-800.avif 800w,
-                img/seccion-tecnica-chihiro-1200.avif 1200w,
-                img/seccion-tecnica-chihiro-1600.avif 1600w"
-              sizes="(min-width:700px) 33vw, 100vw">
-            <source type="image/webp"
-              srcset="
-                img/seccion-tecnica-chihiro-800.webp 800w,
-                img/seccion-tecnica-chihiro-1200.webp 1200w,
-                img/seccion-tecnica-chihiro-1600.webp 1600w"
-              sizes="(min-width:700px) 33vw, 100vw">
-            <img
-              src="img/seccion-tecnica-chihiro-800.jpg"
-              srcset="
-                img/seccion-tecnica-chihiro-800.jpg 800w,
-                img/seccion-tecnica-chihiro-1200.jpg 1200w,
-                img/seccion-tecnica-chihiro-1600.jpg 1600w"
-              sizes="(min-width:700px) 33vw, 100vw"
-              alt="Render de conjunto residencial, sección técnica"
-              width="1600" height="1200"
-              loading="lazy" decoding="async"
-              class="blur-up"
-              data-lqip="img/seccion-tecnica-chihiro-20.jpg">
-          </picture>
-        </figure>
+        <!-- Imagen 3: Lazy loading -->
+        <div class="img-wrapper">
+          <img
+            src="img/seccion-tecnica-chihiro-600.webp"
+            srcset="
+              img/seccion-tecnica-chihiro-600.webp 600w,
+              img/seccion-tecnica-chihiro-900.webp 900w,
+              img/seccion-tecnica-chihiro-1200.webp 1200w"
+            sizes="(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw"
+            alt="Render de conjunto residencial, sección técnica"
+            width="1200" height="900"
+            loading="lazy"
+            decoding="async"
+            data-full="img/seccion-tecnica-chihiro-1600.webp"
+          />
+        </div>
       </div>
     </section>
 
@@ -409,7 +444,15 @@
     <!-- SOBRE MÍ -->
     <section id="sobre" class="about">
       <h2>Sobre mí</h2>
-      <img src="img/virgy-avatar.webp" alt="Virginia Fernández Salva — delineante y técnica en edificación" width="140" height="140" loading="lazy">
+      <div class="img-wrapper">
+        <img 
+          src="img/virgy-avatar.webp" 
+          alt="Virginia Fernández Salva — delineante y técnica en edificación" 
+          width="140" 
+          height="140" 
+          loading="lazy"
+        />
+      </div>
       <p>Soy Virginia Fernández Salva, delineante y técnica en proyectos de edificación.
       Combino precisión técnica y sensibilidad visual para crear renders que comuniquen arquitectura con emoción.</p>
     </section>
@@ -417,7 +460,6 @@
     <!-- CONTACTO -->
     <section id="contacto">
       <h2>Contacto</h2>
-      <!-- Cambia TU_ENDPOINT por el tuyo real en Formspree -->
       <form action="https://formspree.io/f/TU_ENDPOINT" method="POST">
         <input type="text" name="nombre" aria-label="Nombre" placeholder="Tu nombre" required>
         <input type="email" name="email" aria-label="Correo" placeholder="Tu correo" required>
@@ -440,81 +482,127 @@
     // Año dinámico
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Lazy loading mejorado con fade-in
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.addEventListener('load', () => {
+            img.classList.add('loaded');
+          });
+          // Si ya está cargada (de caché)
+          if (img.complete) {
+            img.classList.add('loaded');
+          }
+          observer.unobserve(img);
+        }
+      });
+    }, {
+      rootMargin: '50px'
+    });
+
+    document.querySelectorAll('.gallery img, .about img').forEach(img => {
+      imageObserver.observe(img);
+    });
+
     // Aparecer secciones al hacer scroll
     const sections = document.querySelectorAll('section');
-    const observer = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-    },{threshold:0.15});
-    sections.forEach(s=>observer.observe(s));
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { 
+        if(e.isIntersecting) e.target.classList.add('visible'); 
+      });
+    }, {threshold: 0.15});
+    sections.forEach(s => sectionObserver.observe(s));
 
-    // Lightbox
-    const imgs = document.querySelectorAll('.gallery img');
+    // Lightbox optimizado
+    const galleryImgs = document.querySelectorAll('.gallery img');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = lightbox.querySelector('img');
     const closeBtn = document.getElementById('closeBtn');
-    imgs.forEach(img=>{
-      img.addEventListener('click',()=>{
+    
+    galleryImgs.forEach(img => {
+      img.addEventListener('click', () => {
         lightbox.classList.add('active');
-        lightbox.setAttribute('aria-hidden','false');
-        lightboxImg.src = img.currentSrc || img.src;
+        lightbox.setAttribute('aria-hidden', 'false');
+        // Usar imagen de alta resolución en lightbox
+        const fullSrc = img.dataset.full || img.currentSrc || img.src;
+        lightboxImg.src = fullSrc;
         lightboxImg.alt = img.alt || 'Imagen ampliada';
+        document.body.style.overflow = 'hidden';
       });
     });
-    function closeLightbox(){
-      lightbox.classList.remove('active');
-      lightbox.setAttribute('aria-hidden','true');
-      lightboxImg.src = '';
-    }
-    closeBtn.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLightbox(); });
-    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); });
 
-    // Tema claro/oscuro sincronizado (desktop + móvil)
-    function setThemeFromStorage(btn){
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImg.src = '';
+      document.body.style.overflow = '';
+    }
+    
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { 
+      if(e.target === lightbox) closeLightbox(); 
+    });
+    document.addEventListener('keydown', e => { 
+      if(e.key === 'Escape') closeLightbox(); 
+    });
+
+    // Modo claro/oscuro
+    function setThemeFromStorage(btn) {
       const saved = localStorage.getItem('theme');
-      if(saved==='light') document.body.classList.add('light');
+      if(saved === 'light') document.body.classList.add('light');
       btn.textContent = document.body.classList.contains('light') ? '🌞' : '🌙';
     }
-    function toggleTheme(btn){
+    
+    function toggleTheme(btn) {
       document.body.classList.toggle('light');
       const light = document.body.classList.contains('light');
-      btn.textContent = light ? '🌞' : '🌙';
+      const icon = light ? '🌞' : '🌙';
+      document.getElementById('mode-toggle').textContent = icon;
+      document.getElementById('mode-toggle-mobile').textContent = icon;
       localStorage.setItem('theme', light ? 'light' : 'dark');
     }
+
     const btnDesktop = document.getElementById('mode-toggle');
     const btnMobile = document.getElementById('mode-toggle-mobile');
-    if(btnDesktop){ setThemeFromStorage(btnDesktop); btnDesktop.addEventListener('click', ()=>toggleTheme(btnDesktop)); }
-    if(btnMobile){ setThemeFromStorage(btnMobile); btnMobile.addEventListener('click', ()=>toggleTheme(btnMobile)); }
+    if(btnDesktop) { 
+      setThemeFromStorage(btnDesktop); 
+      btnDesktop.addEventListener('click', () => toggleTheme(btnDesktop)); 
+    }
+    if(btnMobile) { 
+      setThemeFromStorage(btnMobile); 
+      btnMobile.addEventListener('click', () => toggleTheme(btnMobile)); 
+    }
 
-    // Menú móvil accesible
+    // Menú móvil
     const menuBtn = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    function setMenu(open){
+    
+    function setMenu(open) {
       mobileMenu.hidden = !open;
       mobileMenu.style.display = open ? 'flex' : 'none';
       menuBtn.setAttribute('aria-expanded', String(open));
     }
-    if(menuBtn && mobileMenu){
+    
+    if(menuBtn && mobileMenu) {
       setMenu(false);
-      menuBtn.addEventListener('click', ()=> setMenu(mobileMenu.hidden) );
-      mobileMenu.addEventListener('click', (e)=>{ if(e.target.tagName === 'A'){ setMenu(false); } });
+      menuBtn.addEventListener('click', () => {
+        setMenu(mobileMenu.hidden);
+      });
+      mobileMenu.addEventListener('click', (e) => {
+        if(e.target.tagName === 'A') setMenu(false);
+      });
     }
 
-    // Mejora scroll en móvil (listeners passive)
-    window.addEventListener('touchstart', ()=>{}, {passive:true});
-    window.addEventListener('wheel', ()=>{}, {passive:true});
-
-    // LQIP/blur-up: pinta un fondo muy ligero mientras carga la imagen final
-    document.querySelectorAll('img.blur-up').forEach(img=>{
-      const lqip = img.getAttribute('data-lqip');
-      if(lqip){
-        img.style.backgroundImage = `url("${lqip}")`;
-        img.addEventListener('load', ()=>{
-          img.classList.add('is-loaded');
-          setTimeout(()=>{ img.style.backgroundImage='none'; }, 500);
-        }, {once:true});
-      }
-    });
+    // Mejora performance móvil
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      document.body.style.pointerEvents = 'none';
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        document.body.style.pointerEvents = '';
+      }, 100);
+    }, {passive: true});
   </script>
 </body>
 </html>
