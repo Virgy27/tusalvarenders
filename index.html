@@ -4,7 +4,10 @@
   <meta charset="utf-8">
   <title>tusalvarenders — Visualizaciones 3D y arquitectura</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Renders arquitectónicos e interiorismo con un enfoque artístico y profesional. Imágenes que comunican arquitectura con emoción.">
+  <meta name="description" content="Renders arquitectónicos e interiorismo con enfoque artístico y profesional. Imágenes que comunican arquitectura con emoción.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://tusalvarenders.com">
+  <meta name="theme-color" content="#0d0d0d">
 
   <!-- FAVICON -->
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
@@ -15,23 +18,45 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tusalvarenders.com">
   <meta property="og:image" content="https://tusalvarenders.com/img/cover.webp">
+  <meta property="og:site_name" content="tusalvarenders">
+  <meta property="og:locale" content="es_ES">
 
-  <!-- SCHEMA -->
+  <!-- TWITTER CARD -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="tusalvarenders — Renders profesionales">
+  <meta name="twitter:description" content="Renders fotorrealistas para arquitectura e interiorismo desde Málaga.">
+  <meta name="twitter:image" content="https://tusalvarenders.com/img/cover.webp">
+
+  <!-- SCHEMA.ORG JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
+    "@id": "https://tusalvarenders.com/#negocio",
     "name": "tusalvarenders",
-    "image": "https://tusalvarenders.com/img/cover.webp",
     "url": "https://tusalvarenders.com",
+    "logo": "https://tusalvarenders.com/img/favicon.svg",
+    "image": "https://tusalvarenders.com/img/cover.webp",
+    "description": "Renders arquitectónicos e interiorismo. Entregas ágiles, acabado fotorealista.",
+    "priceRange": "€€",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Málaga",
       "addressCountry": "ES"
     },
     "areaServed": "ES",
-    "description": "Renders arquitectónicos e interiorismo. Entregas ágiles, acabado fotorealista.",
-    "priceRange": "€€"
+    "telephone": "+34 600 000 000",
+    "sameAs": [
+      "https://www.instagram.com/tusalvarenders",
+      "https://www.linkedin.com/in/virginia-fernandez-salva"
+    ],
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "telephone": "+34 600 000 000",
+      "contactType": "customer service",
+      "areaServed": "ES",
+      "availableLanguage": ["es","en"]
+    }]
   }
   </script>
 
@@ -97,7 +122,7 @@
     ul.features{list-style:none;color:var(--muted);font-size:.95rem;line-height:1.7}
     /* SOBRE MÍ */
     .about{text-align:center;color:var(--muted)}
-    .about img{border-radius:50%;width:140px;height:140px;margin-bottom:20px}
+    .about img{border-radius:50%;width:140px;height:140px;margin-bottom:20px;object-fit:cover}
     /* CONTACTO */
     form{max-width:520px;margin:auto;display:grid;gap:14px}
     input,textarea,button{border:none;padding:14px 16px;border-radius:var(--radius);background:#1a1a1a;color:var(--fg);font-family:inherit}
@@ -111,6 +136,11 @@
     .close{position:absolute;top:30px;right:40px;font-size:2rem;color:#fff;cursor:pointer}
     footer{text-align:center;padding:40px 24px;color:var(--muted);border-top:1px solid #1e1e1e;font-size:.9rem}
     body.light footer{border-top:1px solid #cccccc}
+    /* REDUCE motion preferencia */
+    @media (prefers-reduced-motion: reduce){
+      section{transition:none}
+      .gallery img:hover{transform:none}
+    }
   </style>
 </head>
 <body>
@@ -130,7 +160,7 @@
     <!-- HERO -->
     <section class="hero">
       <h1>Renders con alma arquitectónica</h1>
-      <p class="lead">Transformo tus proyectos en imágenes con atmósfera y detalle.  
+      <p class="lead">Transformo tus proyectos en imágenes con atmósfera y detalle.
       Renders fotorrealistas para arquitectura, interiorismo y promoción inmobiliaria.</p>
       <a href="#contacto" class="cta">Pedir presupuesto</a>
     </section>
@@ -139,16 +169,17 @@
     <section id="galeria">
       <h2>Galería</h2>
       <div class="grid cols-3 gallery">
-        <img src="Sección diurna de El Viaje de Chihiro.webp" alt="Render de fachada minimalista" width="1600" height="1200" loading="lazy">
-        <img src="Sección nocturna de El Viaje de Chihiro.webp" alt="Render de interior con luz cálida" width="1600" height="1200" loading="lazy">
-        <img src="Sección técnica de El Viaje de Chihiro.webp" alt="Render de conjunto residencial" width="1600" height="1200" loading="lazy">
+        <!-- Renombra tus archivos a estos nombres en la carpeta del proyecto -->
+        <img src="img/seccion-diurna-chihiro.webp" alt="Render de fachada minimalista en Málaga, sección diurna" width="1600" height="1200" loading="lazy">
+        <img src="img/seccion-nocturna-chihiro.webp" alt="Render de interior con luz cálida, sección nocturna" width="1600" height="1200" loading="lazy">
+        <img src="img/seccion-tecnica-chihiro.webp" alt="Render de conjunto residencial, sección técnica" width="1600" height="1200" loading="lazy">
       </div>
     </section>
 
     <!-- PACKS -->
     <section id="packs" class="packs">
       <h2>Packs de precios</h2>
-      <p class="lead">Elige la opción que mejor se adapta a tus necesidades.  
+      <p class="lead">Elige la opción que mejor se adapta a tus necesidades.
       Todos los renders incluyen postproducción y corrección de color.</p>
       <div class="grid cols-3">
         <div class="pack">
@@ -178,14 +209,15 @@
     <!-- SOBRE MÍ -->
     <section id="sobre" class="about">
       <h2>Sobre mí</h2>
-      <img src="img/virgy-avatar.webp" alt="Virginia Fernández Salva — delineante y técnica en edificación">
-      <p>Soy Virginia Fernández Salva, delineante y técnica en proyectos de edificación.  
+      <img src="img/virgy-avatar.webp" alt="Virginia Fernández Salva — delineante y técnica en edificación" width="140" height="140" loading="lazy">
+      <p>Soy Virginia Fernández Salva, delineante y técnica en proyectos de edificación.
       Combino precisión técnica y sensibilidad visual para crear renders que comuniquen arquitectura con emoción.</p>
     </section>
 
     <!-- CONTACTO -->
     <section id="contacto">
       <h2>Contacto</h2>
+      <!-- Sustituye TU_ENDPOINT por tu endpoint real de Formspree -->
       <form action="https://formspree.io/f/TU_ENDPOINT" method="POST">
         <input type="text" name="nombre" aria-label="Nombre" placeholder="Tu nombre" required>
         <input type="email" name="email" aria-label="Correo" placeholder="Tu correo" required>
@@ -199,20 +231,23 @@
   <footer>© <span id="year"></span> tusalvarenders · Málaga</footer>
 
   <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox">
-    <span class="close" id="closeBtn">&times;</span>
-    <img src="" alt="imagen ampliada">
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <span class="close" id="closeBtn" role="button" aria-label="Cerrar visor">&times;</span>
+    <img src="" alt="Imagen ampliada">
   </div>
 
   <script>
+    // Año dinámico
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Aparecer secciones al hacer scroll
     const sections = document.querySelectorAll('section');
     const observer = new IntersectionObserver(entries=>{
       entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
     },{threshold:0.15});
     sections.forEach(s=>observer.observe(s));
 
+    // Lightbox
     const imgs = document.querySelectorAll('.gallery img');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = lightbox.querySelector('img');
@@ -220,12 +255,19 @@
     imgs.forEach(img=>{
       img.addEventListener('click',()=>{
         lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden','false');
         lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
+        lightboxImg.alt = img.alt || 'Imagen ampliada';
       });
     });
-    closeBtn.addEventListener('click',()=>lightbox.classList.remove('active'));
-    lightbox.addEventListener('click',e=>{ if(e.target===lightbox) lightbox.classList.remove('active'); });
+    function closeLightbox(){
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden','true');
+      lightboxImg.src = '';
+    }
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLightbox(); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); });
 
     // Modo claro/oscuro con memoria
     const btn = document.getElementById('mode-toggle');
@@ -243,5 +285,3 @@
   </script>
 </body>
 </html>
-
-
