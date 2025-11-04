@@ -170,7 +170,18 @@
       <h2>Galería</h2>
       <div class="grid cols-3 gallery">
         <!-- Renombra tus archivos a estos nombres en la carpeta del proyecto -->
-        <img src="img/seccion-diurna-chihiro.webp" alt="Render de fachada minimalista en Málaga, sección diurna" width="1600" height="1200" loading="lazy">
+      <img
+        src="img/seccion-diurna-chihiro-1200.webp"
+        srcset="
+          img/seccion-diurna-chihiro-800.webp 800w,
+          img/seccion-diurna-chihiro-1200.webp 1200w,
+          img/seccion-diurna-chihiro-1600.webp 1600w"
+        sizes="(min-width:700px) 33vw, 100vw"
+        alt="Render de fachada minimalista en Málaga, sección diurna"
+        width="1600" height="1200"
+        decoding="async"
+        fetchpriority="high"
+      />
         <img src="img/seccion-nocturna-chihiro.webp" alt="Render de interior con luz cálida, sección nocturna" width="1600" height="1200" loading="lazy">
         <img src="img/seccion-tecnica-chihiro.webp" alt="Render de conjunto residencial, sección técnica" width="1600" height="1200" loading="lazy">
       </div>
