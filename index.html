@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>tusalvarenders — Visualizaciones 3D y arquitectura</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- esencial para móvil -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Renders arquitectónicos e interiorismo con enfoque artístico y profesional. Imágenes que comunican arquitectura con emoción.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://tusalvarenders.com">
@@ -60,7 +60,8 @@
   }
   </script>
 
-  <!-- Preload primera imagen para pintar antes -->
+  <!-- Preload de la 1ª imagen para pintar antes -->
+  <!-- Asegúrate de tener estos ficheros; si no usas AVIF, puedes dejar solo WebP -->
   <link rel="preload" as="image" href="img/seccion-diurna-chihiro-1200.webp"
         imagesrcset="img/seccion-diurna-chihiro-800.webp 800w, img/seccion-diurna-chihiro-1200.webp 1200w, img/seccion-diurna-chihiro-1600.webp 1600w"
         imagesizes="(min-width:700px) 33vw, 100vw">
@@ -73,7 +74,7 @@
       --font-title:'Playfair Display',serif;
       --font-body:'Poppins',sans-serif;
 
-      /* escalas fluidas para móvil → desktop */
+      /* escalas fluidas móvil → desktop */
       --fs-hero: clamp(2rem, 6vw, 3.6rem);
       --fs-h2: clamp(1.4rem, 4.5vw, 2.2rem);
       --fs-body: clamp(0.98rem, 2.6vw, 1.05rem);
@@ -95,6 +96,7 @@
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
     img{width:100%;display:block;border-radius:var(--radius)}
+
     /* HEADER */
     header{
       position:sticky; top:0; z-index:10;
@@ -159,10 +161,24 @@
     .hero p{max-width:720px;margin:0 auto;color:var(--muted)}
 
     /* GALERÍA */
+    .gallery .shot{ position:relative; overflow:hidden; }
     .gallery img{aspect-ratio:4/3;object-fit:cover;cursor:pointer;transition:transform .3s ease}
     .gallery img:hover{transform:scale(1.02)}
     @media (max-width: 700px){
       .gallery img{border-radius:14px}
+    }
+
+    /* efecto blur-up (muestra un LQIP al instante y limpia al cargar) */
+    .blur-up {
+      filter: blur(12px);
+      transform: scale(1.03);
+      transition: filter .4s ease, transform .4s ease;
+      background-size: cover;
+      background-position: center;
+    }
+    .blur-up.is-loaded {
+      filter: blur(0);
+      transform: none;
     }
 
     /* PACKS */
@@ -201,20 +217,20 @@
     footer{text-align:center;padding:32px var(--pad-x);color:var(--muted);border-top:1px solid #1e1e1e;font-size:.95rem}
     body.light footer{border-top:1px solid #cccccc}
 
-    /* PERF mejora móvil: header sin blur y nav compacto */
+    /* PERF móvil: header sin blur y nav compacto */
     @media (max-width: 768px){
       header{
         background:rgba(13,13,13,.92);
         backdrop-filter:none;
       }
       .brand{font-size:1.1rem}
-      .links{display:none}           /* ocultamos links de escritorio */
-      #menu-toggle{display:flex}     /* mostramos hamburguesa */
+      .links{display:none}           /* ocultamos links escritorio */
+      #menu-toggle{display:flex}     /* hamburguesa */
       main{padding:40px var(--pad-x)}
       section{margin-bottom:60px}
     }
 
-    /* REDUCE motion preferencia */
+    /* REDUCE motion */
     @media (prefers-reduced-motion: reduce){
       section{transition:none}
       .gallery img:hover{transform:none}
@@ -262,47 +278,101 @@
     <section id="galeria">
       <h2>Galería</h2>
       <div class="grid cols-3 gallery">
-        <!-- Renombra tus archivos a estos nombres en la carpeta del proyecto -->
-        <!-- 1) PRIMERA imagen con prioridad -->
-        <img
-          src="img/seccion-diurna-chihiro-1200.webp"
-          srcset="
-            img/seccion-diurna-chihiro-800.webp 800w,
-            img/seccion-diurna-chihiro-1200.webp 1200w,
-            img/seccion-diurna-chihiro-1600.webp 1600w"
-          sizes="(min-width:700px) 33vw, 100vw"
-          alt="Render de fachada minimalista en Málaga, sección diurna"
-          width="1600" height="1200"
-          decoding="async"
-          fetchpriority="high"
-        />
+        <!-- NOTA: Mantén todos los nombres en minúsculas y coloca los archivos reales en /img
+             Sube 3 tamaños por imagen (800/1200/1600). Si no tienes AVIF o JPG, elimina esas líneas y deja WebP. -->
 
-        <!-- 2) Imágenes siguientes lazy -->
-        <img
-          src="img/seccion-nocturna-chihiro-800.webp"
-          srcset="
-            img/seccion-nocturna-chihiro-800.webp 800w,
-            img/seccion-nocturna-chihiro-1200.webp 1200w,
-            img/seccion-nocturna-chihiro-1600.webp 1600w"
-          sizes="(min-width:700px) 33vw, 100vw"
-          alt="Render de interior con luz cálida, sección nocturna"
-          width="1600" height="1200"
-          loading="lazy"
-          decoding="async"
-        />
+        <!-- ITEM 1 -->
+        <figure class="shot">
+          <picture>
+            <!-- AVIF -->
+            <source type="image/avif"
+              srcset="
+                img/seccion-diurna-chihiro-800.avif 800w,
+                img/seccion-diurna-chihiro-1200.avif 1200w,
+                img/seccion-diurna-chihiro-1600.avif 1600w"
+              sizes="(min-width:700px) 33vw, 100vw">
+            <!-- WebP -->
+            <source type="image/webp"
+              srcset="
+                img/seccion-diurna-chihiro-800.webp 800w,
+                img/seccion-diurna-chihiro-1200.webp 1200w,
+                img/seccion-diurna-chihiro-1600.webp 1600w"
+              sizes="(min-width:700px) 33vw, 100vw">
+            <!-- Fallback IMG: usa webp si no tienes jpg -->
+            <img
+              src="img/seccion-diurna-chihiro-800.jpg"
+              srcset="
+                img/seccion-diurna-chihiro-800.jpg 800w,
+                img/seccion-diurna-chihiro-1200.jpg 1200w,
+                img/seccion-diurna-chihiro-1600.jpg 1600w"
+              sizes="(min-width:700px) 33vw, 100vw"
+              alt="Render de fachada minimalista en Málaga, sección diurna"
+              width="1600" height="1200"
+              loading="lazy" decoding="async"
+              class="blur-up"
+              data-lqip="img/seccion-diurna-chihiro-20.jpg">
+          </picture>
+        </figure>
 
-        <img
-          src="img/seccion-tecnica-chihiro-800.webp"
-          srcset="
-            img/seccion-tecnica-chihiro-800.webp 800w,
-            img/seccion-tecnica-chihiro-1200.webp 1200w,
-            img/seccion-tecnica-chihiro-1600.webp 1600w"
-          sizes="(min-width:700px) 33vw, 100vw"
-          alt="Render de conjunto residencial, sección técnica"
-          width="1600" height="1200"
-          loading="lazy"
-          decoding="async"
-        />
+        <!-- ITEM 2 -->
+        <figure class="shot">
+          <picture>
+            <source type="image/avif"
+              srcset="
+                img/seccion-nocturna-chihiro-800.avif 800w,
+                img/seccion-nocturna-chihiro-1200.avif 1200w,
+                img/seccion-nocturna-chihiro-1600.avif 1600w"
+              sizes="(min-width:700px) 33vw, 100vw">
+            <source type="image/webp"
+              srcset="
+                img/seccion-nocturna-chihiro-800.webp 800w,
+                img/seccion-nocturna-chihiro-1200.webp 1200w,
+                img/seccion-nocturna-chihiro-1600.webp 1600w"
+              sizes="(min-width:700px) 33vw, 100vw">
+            <img
+              src="img/seccion-nocturna-chihiro-800.jpg"
+              srcset="
+                img/seccion-nocturna-chihiro-800.jpg 800w,
+                img/seccion-nocturna-chihiro-1200.jpg 1200w,
+                img/seccion-nocturna-chihiro-1600.jpg 1600w"
+              sizes="(min-width:700px) 33vw, 100vw"
+              alt="Render de interior con luz cálida, sección nocturna"
+              width="1600" height="1200"
+              loading="lazy" decoding="async"
+              class="blur-up"
+              data-lqip="img/seccion-nocturna-chihiro-20.jpg">
+          </picture>
+        </figure>
+
+        <!-- ITEM 3 -->
+        <figure class="shot">
+          <picture>
+            <source type="image/avif"
+              srcset="
+                img/seccion-tecnica-chihiro-800.avif 800w,
+                img/seccion-tecnica-chihiro-1200.avif 1200w,
+                img/seccion-tecnica-chihiro-1600.avif 1600w"
+              sizes="(min-width:700px) 33vw, 100vw">
+            <source type="image/webp"
+              srcset="
+                img/seccion-tecnica-chihiro-800.webp 800w,
+                img/seccion-tecnica-chihiro-1200.webp 1200w,
+                img/seccion-tecnica-chihiro-1600.webp 1600w"
+              sizes="(min-width:700px) 33vw, 100vw">
+            <img
+              src="img/seccion-tecnica-chihiro-800.jpg"
+              srcset="
+                img/seccion-tecnica-chihiro-800.jpg 800w,
+                img/seccion-tecnica-chihiro-1200.jpg 1200w,
+                img/seccion-tecnica-chihiro-1600.jpg 1600w"
+              sizes="(min-width:700px) 33vw, 100vw"
+              alt="Render de conjunto residencial, sección técnica"
+              width="1600" height="1200"
+              loading="lazy" decoding="async"
+              class="blur-up"
+              data-lqip="img/seccion-tecnica-chihiro-20.jpg">
+          </picture>
+        </figure>
       </div>
     </section>
 
@@ -386,7 +456,7 @@
       img.addEventListener('click',()=>{
         lightbox.classList.add('active');
         lightbox.setAttribute('aria-hidden','false');
-        lightboxImg.src = img.src;
+        lightboxImg.src = img.currentSrc || img.src;
         lightboxImg.alt = img.alt || 'Imagen ampliada';
       });
     });
@@ -399,7 +469,7 @@
     lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLightbox(); });
     document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); });
 
-    // Modo claro/oscuro con memoria (escritorio y móvil sincronizados)
+    // Tema claro/oscuro sincronizado (desktop + móvil)
     function setThemeFromStorage(btn){
       const saved = localStorage.getItem('theme');
       if(saved==='light') document.body.classList.add('light');
@@ -411,7 +481,6 @@
       btn.textContent = light ? '🌞' : '🌙';
       localStorage.setItem('theme', light ? 'light' : 'dark');
     }
-
     const btnDesktop = document.getElementById('mode-toggle');
     const btnMobile = document.getElementById('mode-toggle-mobile');
     if(btnDesktop){ setThemeFromStorage(btnDesktop); btnDesktop.addEventListener('click', ()=>toggleTheme(btnDesktop)); }
@@ -422,25 +491,30 @@
     const mobileMenu = document.getElementById('mobile-menu');
     function setMenu(open){
       mobileMenu.hidden = !open;
-      if(open){ mobileMenu.style.display = 'flex'; }
-      else{ mobileMenu.style.display = 'none'; }
+      mobileMenu.style.display = open ? 'flex' : 'none';
       menuBtn.setAttribute('aria-expanded', String(open));
     }
     if(menuBtn && mobileMenu){
       setMenu(false);
-      menuBtn.addEventListener('click', ()=>{
-        const open = mobileMenu.hidden;
-        setMenu(open);
-      });
-      // cerrar al navegar
-      mobileMenu.addEventListener('click', (e)=>{
-        if(e.target.tagName === 'A'){ setMenu(false); }
-      });
+      menuBtn.addEventListener('click', ()=> setMenu(mobileMenu.hidden) );
+      mobileMenu.addEventListener('click', (e)=>{ if(e.target.tagName === 'A'){ setMenu(false); } });
     }
 
     // Mejora scroll en móvil (listeners passive)
     window.addEventListener('touchstart', ()=>{}, {passive:true});
     window.addEventListener('wheel', ()=>{}, {passive:true});
+
+    // LQIP/blur-up: pinta un fondo muy ligero mientras carga la imagen final
+    document.querySelectorAll('img.blur-up').forEach(img=>{
+      const lqip = img.getAttribute('data-lqip');
+      if(lqip){
+        img.style.backgroundImage = `url("${lqip}")`;
+        img.addEventListener('load', ()=>{
+          img.classList.add('is-loaded');
+          setTimeout(()=>{ img.style.backgroundImage='none'; }, 500);
+        }, {once:true});
+      }
+    });
   </script>
 </body>
 </html>
