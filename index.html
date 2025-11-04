@@ -60,15 +60,10 @@
   }
   </script>
 
-  <!-- Preload crítico: primera imagen -->
-  <link rel="preload" as="image" href="img/seccion-diurna-chihiro-600.webp"
-        imagesrcset="img/seccion-diurna-chihiro-600.webp 600w, img/seccion-diurna-chihiro-900.webp 900w, img/seccion-diurna-chihiro-1200.webp 1200w"
+  <!-- Preload primera imagen -->
+  <link rel="preload" as="image" href="img/seccion-diurna-chihiro-800.webp"
+        imagesrcset="img/seccion-diurna-chihiro-800.webp 800w, img/seccion-diurna-chihiro-1200.webp 1200w, img/seccion-diurna-chihiro-1600.webp 1600w"
         imagesizes="(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw">
-
-  <!-- Preconnect a CDN de fuentes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -128,12 +123,11 @@
     /* HEADER */
     header{
       position:sticky; top:0; z-index:10;
-      background:rgba(13,13,13,.92);
+      background:rgba(13,13,13,.75);
       backdrop-filter:blur(8px);
-      border-bottom:1px solid #1a1a1a;
-      will-change: transform;
+      border-bottom:1px solid #1a1a1a
     }
-    body.light header{background:rgba(247,246,244,.92);border-bottom:1px solid #cccccc}
+    body.light header{background:rgba(247,246,244,.8);border-bottom:1px solid #cccccc}
     nav{
       max-width:1100px; margin:auto;
       display:flex; justify-content:space-between; align-items:center;
@@ -179,14 +173,8 @@
 
     .grid{display:grid; gap:16px}
     .cols-3{grid-template-columns:1fr}
-    
-    /* Grid responsivo mejorado */
     @media(min-width:700px){
       .cols-2{grid-template-columns:1fr 1fr}
-      .cols-3{grid-template-columns:repeat(2,1fr)}
-      .grid{gap:20px}
-    }
-    @media(min-width:1000px){
       .cols-3{grid-template-columns:repeat(3,1fr)}
       .grid{gap:24px}
     }
@@ -195,7 +183,7 @@
     .hero{text-align:center;padding:60px 0 70px}
     .hero p{max-width:720px;margin:0 auto;color:var(--muted)}
 
-    /* GALERÍA optimizada */
+    /* GALERÍA */
     .gallery .img-wrapper{
       aspect-ratio:4/3;
       border-radius:var(--radius);
@@ -205,11 +193,9 @@
       object-fit:cover;
       cursor:pointer;
       transition:transform .3s ease;
-      will-change: transform;
     }
     .gallery .img-wrapper:hover img{transform:scale(1.02)}
-    
-    @media (max-width: 699px){
+    @media (max-width: 700px){
       .gallery .img-wrapper{border-radius:14px}
     }
 
@@ -231,7 +217,6 @@
       width:140px;
       height:140px;
       margin:0 auto 16px;
-      aspect-ratio:1;
     }
     .about img{
       border-radius:50%;
@@ -252,46 +237,19 @@
     button:hover{background:var(--beige)}
     input,button,textarea{min-height:48px}
 
-    /* LIGHTBOX mejorado */
-    .lightbox{
-      position:fixed;inset:0;
-      background:rgba(0,0,0,.95);
-      display:flex;align-items:center;justify-content:center;
-      opacity:0;pointer-events:none;
-      transition:opacity .3s ease;
-      z-index:1000;
-    }
+    /* LIGHTBOX */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease}
     .lightbox.active{opacity:1;pointer-events:auto}
-    .lightbox img{
-      max-width:90%;
-      max-height:90%;
-      border-radius:var(--radius);
-      box-shadow:0 0 40px rgba(0,0,0,.8);
-      object-fit:contain;
-    }
-    .close{
-      position:absolute;
-      top:20px;right:20px;
-      font-size:2.5rem;
-      color:#fff;
-      cursor:pointer;
-      width:50px;height:50px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(0,0,0,.5);
-      border-radius:50%;
-      transition:background .3s;
-    }
-    .close:hover{background:rgba(0,0,0,.8)}
+    .lightbox img{max-width:92%;max-height:92%;border-radius:var(--radius);box-shadow:0 0 20px rgba(0,0,0,.5)}
+    .close{position:absolute;top:24px;right:24px;font-size:2rem;color:#fff;cursor:pointer}
 
     footer{text-align:center;padding:32px var(--pad-x);color:var(--muted);border-top:1px solid #1e1e1e;font-size:.95rem}
     body.light footer{border-top:1px solid #cccccc}
 
-    /* Optimización móvil */
+    /* PERF mejora móvil */
     @media (max-width: 768px){
       header{
-        background:rgba(13,13,13,.95);
+        background:rgba(13,13,13,.92);
         backdrop-filter:none;
       }
       .brand{font-size:1.1rem}
@@ -299,22 +257,11 @@
       #menu-toggle{display:flex}
       main{padding:40px var(--pad-x)}
       section{margin-bottom:60px}
-      .lightbox img{
-        max-width:95%;
-        max-height:95%;
-      }
-      .close{
-        top:10px;
-        right:10px;
-        font-size:2rem;
-        width:44px;
-        height:44px;
-      }
     }
 
-    /* Reduce motion */
+    /* REDUCE motion preferencia */
     @media (prefers-reduced-motion: reduce){
-      *{transition:none !important; animation:none !important}
+      section{transition:none}
       .gallery .img-wrapper:hover img{transform:none}
     }
   </style>
@@ -324,6 +271,7 @@
     <nav>
       <div class="brand">tusalvarenders</div>
 
+      <!-- enlaces escritorio -->
       <div class="links" aria-label="Navegación principal">
         <a href="#galeria">Galería</a> ·
         <a href="#packs">Packs</a> ·
@@ -331,12 +279,14 @@
         <button id="mode-toggle" aria-label="Cambiar modo claro/oscuro" title="Cambiar modo">🌙</button>
       </div>
 
+      <!-- móvil: menú y modo -->
       <div class="links-mobile-ctas" style="display:flex; gap:10px;">
         <button id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">☰</button>
         <button id="mode-toggle-mobile" aria-label="Cambiar modo claro/oscuro" title="Cambiar modo">🌙</button>
       </div>
     </nav>
 
+    <!-- menú móvil -->
     <div id="mobile-menu" class="links--mobile" hidden>
       <a href="#galeria">Galería</a>
       <a href="#packs">Packs</a>
@@ -361,51 +311,48 @@
         <!-- Imagen 1: Prioridad alta -->
         <div class="img-wrapper">
           <img
-            src="img/seccion-diurna-chihiro-600.webp"
+            src="img/seccion-diurna-chihiro-800.webp"
             srcset="
-              img/seccion-diurna-chihiro-600.webp 600w,
-              img/seccion-diurna-chihiro-900.webp 900w,
-              img/seccion-diurna-chihiro-1200.webp 1200w"
+              img/seccion-diurna-chihiro-800.webp 800w,
+              img/seccion-diurna-chihiro-1200.webp 1200w,
+              img/seccion-diurna-chihiro-1600.webp 1600w"
             sizes="(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw"
             alt="Render de fachada minimalista en Málaga, sección diurna"
-            width="1200" height="900"
+            width="1600" height="1200"
             decoding="async"
             fetchpriority="high"
-            data-full="img/seccion-diurna-chihiro-1600.webp"
           />
         </div>
 
         <!-- Imagen 2: Lazy loading -->
         <div class="img-wrapper">
           <img
-            src="img/seccion-nocturna-chihiro-600.webp"
+            src="img/seccion-nocturna-chihiro-800.webp"
             srcset="
-              img/seccion-nocturna-chihiro-600.webp 600w,
-              img/seccion-nocturna-chihiro-900.webp 900w,
-              img/seccion-nocturna-chihiro-1200.webp 1200w"
+              img/seccion-nocturna-chihiro-800.webp 800w,
+              img/seccion-nocturna-chihiro-1200.webp 1200w,
+              img/seccion-nocturna-chihiro-1600.webp 1600w"
             sizes="(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw"
             alt="Render de interior con luz cálida, sección nocturna"
-            width="1200" height="900"
+            width="1600" height="1200"
             loading="lazy"
             decoding="async"
-            data-full="img/seccion-nocturna-chihiro-1600.webp"
           />
         </div>
 
         <!-- Imagen 3: Lazy loading -->
         <div class="img-wrapper">
           <img
-            src="img/seccion-tecnica-chihiro-600.webp"
+            src="img/seccion-tecnica-chihiro-800.webp"
             srcset="
-              img/seccion-tecnica-chihiro-600.webp 600w,
-              img/seccion-tecnica-chihiro-900.webp 900w,
-              img/seccion-tecnica-chihiro-1200.webp 1200w"
+              img/seccion-tecnica-chihiro-800.webp 800w,
+              img/seccion-tecnica-chihiro-1200.webp 1200w,
+              img/seccion-tecnica-chihiro-1600.webp 1600w"
             sizes="(max-width: 699px) 100vw, (max-width: 1099px) 50vw, 33vw"
             alt="Render de conjunto residencial, sección técnica"
-            width="1200" height="900"
+            width="1600" height="1200"
             loading="lazy"
             decoding="async"
-            data-full="img/seccion-tecnica-chihiro-1600.webp"
           />
         </div>
       </div>
@@ -445,13 +392,7 @@
     <section id="sobre" class="about">
       <h2>Sobre mí</h2>
       <div class="img-wrapper">
-        <img 
-          src="img/virgy-avatar.webp" 
-          alt="Virginia Fernández Salva — delineante y técnica en edificación" 
-          width="140" 
-          height="140" 
-          loading="lazy"
-        />
+        <img src="img/virgy-avatar.webp" alt="Virginia Fernández Salva — delineante y técnica en edificación" width="140" height="140" loading="lazy">
       </div>
       <p>Soy Virginia Fernández Salva, delineante y técnica en proyectos de edificación.
       Combino precisión técnica y sensibilidad visual para crear renders que comuniquen arquitectura con emoción.</p>
@@ -507,54 +448,40 @@
 
     // Aparecer secciones al hacer scroll
     const sections = document.querySelectorAll('section');
-    const sectionObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => { 
-        if(e.isIntersecting) e.target.classList.add('visible'); 
-      });
-    }, {threshold: 0.15});
-    sections.forEach(s => sectionObserver.observe(s));
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+    },{threshold:0.15});
+    sections.forEach(s=>observer.observe(s));
 
-    // Lightbox optimizado
-    const galleryImgs = document.querySelectorAll('.gallery img');
+    // Lightbox
+    const imgs = document.querySelectorAll('.gallery img');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = lightbox.querySelector('img');
     const closeBtn = document.getElementById('closeBtn');
-    
-    galleryImgs.forEach(img => {
-      img.addEventListener('click', () => {
+    imgs.forEach(img=>{
+      img.addEventListener('click',()=>{
         lightbox.classList.add('active');
-        lightbox.setAttribute('aria-hidden', 'false');
-        // Usar imagen de alta resolución en lightbox
-        const fullSrc = img.dataset.full || img.currentSrc || img.src;
-        lightboxImg.src = fullSrc;
+        lightbox.setAttribute('aria-hidden','false');
+        lightboxImg.src = img.src;
         lightboxImg.alt = img.alt || 'Imagen ampliada';
-        document.body.style.overflow = 'hidden';
       });
     });
-
-    function closeLightbox() {
+    function closeLightbox(){
       lightbox.classList.remove('active');
-      lightbox.setAttribute('aria-hidden', 'true');
+      lightbox.setAttribute('aria-hidden','true');
       lightboxImg.src = '';
-      document.body.style.overflow = '';
     }
-    
     closeBtn.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', e => { 
-      if(e.target === lightbox) closeLightbox(); 
-    });
-    document.addEventListener('keydown', e => { 
-      if(e.key === 'Escape') closeLightbox(); 
-    });
+    lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLightbox(); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); });
 
-    // Modo claro/oscuro
-    function setThemeFromStorage(btn) {
+    // Modo claro/oscuro con memoria
+    function setThemeFromStorage(btn){
       const saved = localStorage.getItem('theme');
-      if(saved === 'light') document.body.classList.add('light');
+      if(saved==='light') document.body.classList.add('light');
       btn.textContent = document.body.classList.contains('light') ? '🌞' : '🌙';
     }
-    
-    function toggleTheme(btn) {
+    function toggleTheme(btn){
       document.body.classList.toggle('light');
       const light = document.body.classList.contains('light');
       const icon = light ? '🌞' : '🌙';
@@ -565,44 +492,32 @@
 
     const btnDesktop = document.getElementById('mode-toggle');
     const btnMobile = document.getElementById('mode-toggle-mobile');
-    if(btnDesktop) { 
-      setThemeFromStorage(btnDesktop); 
-      btnDesktop.addEventListener('click', () => toggleTheme(btnDesktop)); 
-    }
-    if(btnMobile) { 
-      setThemeFromStorage(btnMobile); 
-      btnMobile.addEventListener('click', () => toggleTheme(btnMobile)); 
-    }
+    if(btnDesktop){ setThemeFromStorage(btnDesktop); btnDesktop.addEventListener('click', ()=>toggleTheme(btnDesktop)); }
+    if(btnMobile){ setThemeFromStorage(btnMobile); btnMobile.addEventListener('click', ()=>toggleTheme(btnMobile)); }
 
-    // Menú móvil
+    // Menú móvil accesible
     const menuBtn = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    
-    function setMenu(open) {
+    function setMenu(open){
       mobileMenu.hidden = !open;
-      mobileMenu.style.display = open ? 'flex' : 'none';
+      if(open){ mobileMenu.style.display = 'flex'; }
+      else{ mobileMenu.style.display = 'none'; }
       menuBtn.setAttribute('aria-expanded', String(open));
     }
-    
-    if(menuBtn && mobileMenu) {
+    if(menuBtn && mobileMenu){
       setMenu(false);
-      menuBtn.addEventListener('click', () => {
-        setMenu(mobileMenu.hidden);
+      menuBtn.addEventListener('click', ()=>{
+        const open = mobileMenu.hidden;
+        setMenu(open);
       });
-      mobileMenu.addEventListener('click', (e) => {
-        if(e.target.tagName === 'A') setMenu(false);
+      mobileMenu.addEventListener('click', (e)=>{
+        if(e.target.tagName === 'A'){ setMenu(false); }
       });
     }
 
-    // Mejora performance móvil
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-      document.body.style.pointerEvents = 'none';
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        document.body.style.pointerEvents = '';
-      }, 100);
-    }, {passive: true});
+    // Mejora scroll en móvil
+    window.addEventListener('touchstart', ()=>{}, {passive:true});
+    window.addEventListener('wheel', ()=>{}, {passive:true});
   </script>
 </body>
 </html>
