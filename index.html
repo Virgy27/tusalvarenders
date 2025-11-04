@@ -429,7 +429,7 @@
       font-weight: bold; font-size: 1.2rem;
     }
 
-    /* ---------- CONTACTO (nuevo estilo coherente) ---------- */
+    /* ---------- CONTACTO (coherente) ---------- */
     #contacto .section-header { margin-bottom: var(--space-md); }
 
     .contact-info-grid {
@@ -550,9 +550,9 @@
         <li><a href="#testimonios">Testimonios</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#contacto">Contacto</a></li>
-        <li><button class="theme-toggle" id="themeToggle">🌙</button></li>
+        <li><button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" aria-pressed="false">🌙</button></li>
       </ul>
-      <button class="mobile-toggle" id="mobileToggle">☰</button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
     </nav>
   </header>
 
@@ -856,7 +856,7 @@
       </div>
     </section>
 
-    <!-- CONTACTO (mejorado) -->
+    <!-- CONTACTO -->
     <section id="contacto">
       <div class="section-header">
         <p class="section-subtitle">Hablemos</p>
@@ -920,5 +920,148 @@
       </div>
     </section>
   </main>
+
+  <!-- ======== JS ======== -->
+  <script>
+    (function () {
+      const header = document.getElementById('header');
+      const themeToggle = document.getElementById('themeToggle');
+      const mobileToggle = document.getElementById('mobileToggle');
+      const navLinks = document.getElementById('navLinks');
+
+      // ----- Header shadow on scroll -----
+      const onScroll = () => {
+        if (window.scrollY > 10) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      };
+      window.addEventListener('scroll', onScroll);
+      onScroll();
+
+      // ----- Theme (persist in localStorage) -----
+      const THEME_KEY = 'tsr_theme';
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      const applyTheme = (mode) => {
+        document.body.classList.toggle('light', mode === 'light');
+        themeToggle.textContent = mode === 'light' ? '☀️' : '🌙';
+        themeToggle.setAttribute('aria-pressed', mode === 'light' ? 'true' : 'false');
+        localStorage.setItem(THEME_KEY, mode);
+        // Update meta theme-color for mobile UI
+        const metaTheme = document.querySelector('meta[name="theme-color"]');
+        if (metaTheme) metaTheme.setAttribute('content', mode === 'light' ? '#fafafa' : '#0a0a0a');
+      };
+      applyTheme(savedTheme ? savedTheme : (prefersLight ? 'light' : 'dark'));
+
+      themeToggle.addEventListener('click', () => {
+        const isLight = document.body.classList.contains('light');
+        applyTheme(isLight ? 'dark' : 'light');
+      });
+
+      // ----- Mobile menu toggle -----
+      mobileToggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('active');
+        mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      // Close menu on link click (mobile)
+      navLinks.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A' && navLinks.classList.contains('active')) {
+          navLinks.classList.remove('active');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // ----- Calculator -----
+      const serviceType = document.getElementById('serviceType');
+      const quantityGroup = document.getElementById('quantityGroup');
+      const quantityLabel = document.getElementById('quantityLabel');
+      const quantityInput = document.getElementById('quantity');
+      const durationGroup = document.getElementById('durationGroup');
+      const durationInput = document.getElementById('duration');
+      const postproduction = document.getElementById('postproduction');
+      const totalPrice = document.getElementById('totalPrice');
+
+      const PRICES = {
+        // Puedes ajustar estos valores cuando quieras
+        'levantamiento': { base: 120, per: 2, ppMult: 1.00 },        // base + €/m²
+        'imagen-basico': { per: 90, ppMult: 1.15 },                  // €/imagen
+        'imagen-pro': { per: 150, ppMult: 1.15 },                    // €/imagen
+        'imagen-premium': { per: 250, ppMult: 1.15 },                // €/imagen
+        'video': { perSecond: 10, ppMult: 1.10 }                     // €/segundo
+      };
+
+      const fmt = (n) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+
+      function updateFields() {
+        const v = serviceType.value;
+        if (!v) {
+          quantityGroup.style.display = 'none';
+          durationGroup.style.display = 'none';
+          totalPrice.textContent = '0€';
+          return;
+        }
+        if (v === 'video') {
+          durationGroup.style.display = '';
+          quantityGroup.style.display = 'none';
+        } else if (v === 'levantamiento') {
+          quantityGroup.style.display = '';
+          quantityLabel.textContent = 'Metros cuadrados (m²)';
+          quantityInput.min = '10';
+          if (!quantityInput.value || Number(quantityInput.value) < 10) quantityInput.value = 50;
+          durationGroup.style.display = 'none';
+        } else {
+          quantityGroup.style.display = '';
+          quantityLabel.textContent = 'Número de imágenes';
+          quantityInput.min = '1';
+          if (!quantityInput.value || Number(quantityInput.value) < 1) quantityInput.value = 1;
+          durationGroup.style.display = 'none';
+        }
+        calculate();
+      }
+
+      function calculate() {
+        const v = serviceType.value;
+        if (!v) { totalPrice.textContent = '0€'; return; }
+
+        let price = 0;
+        if (v === 'video') {
+          const seconds = Math.max(10, Math.min(180, Number(durationInput.value || 0)));
+          price = seconds * PRICES.video.perSecond;
+          if (postproduction.checked) price *= PRICES.video.ppMult;
+        } else if (v === 'levantamiento') {
+          const sqm = Math.max(10, Number(quantityInput.value || 0));
+          price = PRICES.levantamiento.base + (sqm * PRICES.levantamiento.per);
+          // postproducción no aplica al levantamiento (no cambia)
+        } else {
+          const qty = Math.max(1, Number(quantityInput.value || 0));
+          const pack = PRICES[v];
+          price = qty * pack.per;
+          if (postproduction.checked) price *= pack.ppMult;
+        }
+
+        totalPrice.textContent = fmt(Math.round(price));
+      }
+
+      ['change', 'input'].forEach(evt => {
+        serviceType.addEventListener(evt, updateFields);
+        quantityInput.addEventListener(evt, calculate);
+        durationInput.addEventListener(evt, calculate);
+        postproduction.addEventListener(evt, calculate);
+      });
+
+      // init
+      updateFields();
+
+      // ----- Simple form guard (solo evita envío real) -----
+      const contactForm = document.getElementById('contactForm');
+      contactForm.addEventListener('submit', function (e) {
+        // Aquí podrías integrar EmailJS, Formspree o backend propio.
+        e.preventDefault();
+        const data = new FormData(contactForm);
+        const name = data.get('name');
+        alert(`¡Gracias, ${name || '🙂'}! He recibido tu mensaje. Te responderé pronto por email.`);
+        contactForm.reset();
+      });
+    })();
+  </script>
 </body>
 </html>
