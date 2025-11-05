@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Calculadora de Presupuesto - tusalvarenders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calcula el presupuesto para tus renders arquitectónicos. Visualización 3D profesional en Málaga y toda España.">
+  <meta name="keywords" content="presupuesto renders, calculadora renders, renders arquitectónicos Málaga, visualización 3D">
+  <meta name="author" content="Virginia Fernández Salva">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://tusalvarenders.com/presupuesto.html">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- FAVICON -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='80'>🏛️</text></svg>">
+
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content="Calculadora de Presupuesto - tusalvarenders">
+  <meta property="og:description" content="Calcula el presupuesto para tus renders arquitectónicos profesionales">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tusalvarenders.com/presupuesto.html">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #141414;
+      --bg-tertiary: #1a1a1a;
+      --text-primary: #f5f5f5;
+      --text-secondary: #a0a0a0;
+      --text-muted: #707070;
+      --accent: #c9a87c;
+      --accent-hover: #d4b890;
+      --border: #2a2a2a;
+      --shadow: rgba(0, 0, 0, 0.5);
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Inter', sans-serif;
+      --space-xs: clamp(0.5rem, 1vw, 0.75rem);
+      --space-sm: clamp(1rem, 2vw, 1.5rem);
+      --space-md: clamp(2rem, 4vw, 3rem);
+      --space-lg: clamp(3rem, 6vw, 5rem);
+      --space-xl: clamp(4rem, 8vw, 7rem);
+      --fs-xs: clamp(0.875rem, 1.5vw, 0.95rem);
+      --fs-sm: clamp(0.95rem, 2vw, 1.05rem);
+      --fs-base: clamp(1rem, 2.2vw, 1.125rem);
+      --fs-lg: clamp(1.25rem, 3vw, 1.5rem);
+      --fs-xl: clamp(1.75rem, 4vw, 2.5rem);
+      --fs-2xl: clamp(2.5rem, 6vw, 4rem);
+      --fs-3xl: clamp(3rem, 8vw, 5.5rem);
+      --radius: 16px;
+      --radius-sm: 8px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.light {
+      --bg-primary: #fafafa;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f5f5f5;
+      --text-primary: #0a0a0a;
+      --text-secondary: #404040;
+      --text-muted: #707070;
+      --accent: #a67c52;
+      --accent-hover: #8b6644;
+      --border: #e0e0e0;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    html {scroll-behavior: smooth;}
+    body {
+      font-family: var(--font-body);
+      font-size: var(--fs-base);
+      line-height: 1.7;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--transition), color var(--transition);
+    }
+
+    /* Header styles */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    body.light header {background: rgba(250, 250, 250, 0.85);}
+    header.scrolled {padding: 0.5rem 0; box-shadow: 0 4px 20px var(--shadow);}
+
+    nav {
+      max-width: 1400px; margin: 0 auto;
+      padding: 1.25rem clamp(1rem, 4vw, 3rem);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: var(--fs-xl);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .logo:hover {color: var(--accent);}
+
+    .back-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: var(--fs-sm);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color var(--transition);
+    }
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    /* Main content */
+    main {
+      padding-top: 100px;
+      min-height: 100vh;
+    }
+
+    .calculator-section {
+      padding: var(--space-xl) clamp(1rem, 4vw, 3rem);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .section-subtitle {
+      color: var(--accent);
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-2xl);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .section-description {
+      font-size: var(--fs-base);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Calculator container */
+    .calculator-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+
+    .calculator-form .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .calculator-form label {
+      font-size: var(--fs-sm);
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .calculator-form select,
+    .calculator-form input[type="number"] {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.9rem;
+      font-size: var(--fs-sm);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .calculator-form select:focus,
+    .calculator-form input[type="number"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(201,168,124,0.15);
+    }
+
+    .calculator-form input[type="checkbox"] {
+      margin-right: 0.5rem;
+      accent-color: var(--accent);
+    }
+
+    .calculator-form .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .calculator-form .checkbox-group label {
+      cursor: pointer;
+    }
+
+    /* Result display */
+    .calculator-result {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .result-label {
+      font-size: var(--fs-sm);
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .result-price {
+      font-family: var(--font-display);
+      font-size: var(--fs-3xl);
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .result-breakdown {
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: var(--radius);
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(201, 168, 124, 0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .calculator-container {
+        padding: 1.5rem;
+      }
+      
+      .section-title {
+        font-size: var(--fs-xl);
+      }
+    }
+
+    /* Quantity and duration groups */
+    #quantityGroup, #durationGroup {
+      display: none;
+    }
+
+    #quantityGroup.show, #durationGroup.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <nav>
+      <a href="index.html" class="logo">tusalvarenders</a>
+      <a href="index.html" class="back-link">
+        ← Volver al inicio
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="calculator-section">
+      <div class="section-header">
+        <p class="section-subtitle">Presupuesto</p>
+        <h1 class="section-title">Calculadora de Precio</h1>
+        <p class="section-description">Calcula el presupuesto aproximado de tu proyecto. Todos los precios son orientativos y pueden variar según la complejidad específica.</p>
+      </div>
+
+      <div class="calculator-container">
+        <form class="calculator-form" id="calculatorForm">
+          <div class="form-group">
+            <label for="serviceType">Tipo de servicio</label>
+            <select id="serviceType" name="serviceType" required>
+              <option value="">Selecciona un servicio</option>
+              <option value="levantamiento">Levantamiento 3D SketchUp</option>
+              <option value="imagen-basico">Render Imagen - Básico</option>
+              <option value="imagen-pro">Render Imagen - Profesional</option>
+              <option value="imagen-premium">Render Imagen - Premium</option>
+              <option value="video">Render Vídeo</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="quantityGroup">
+            <label for="quantity" id="quantityLabel">Cantidad</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1">
+          </div>
+
+          <div class="form-group" id="durationGroup">
+            <label for="duration">Duración del vídeo (segundos)</label>
+            <input type="number" id="duration" name="duration" min="10" max="180" value="30" step="10">
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="postproduction" name="postproduction">
+            <label for="postproduction">Incluir postproducción avanzada en Photoshop</label>
+          </div>
+
+          <div class="calculator-result" id="resultContainer">
+            <div class="result-label">Presupuesto estimado:</div>
+            <div class="result-price" id="totalPrice">0€</div>
+            <div class="result-breakdown" id="breakdown"></div>
+          </div>
+
+          <a href="index.html#contacto" class="btn btn-primary" id="contactBtn" style="display: none;">
+            Solicitar presupuesto detallado
+          </a>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Calculator functionality
+    const serviceType = document.getElementById('serviceType');
+    const quantityGroup = document.getElementById('quantityGroup');
+    const quantityLabel = document.getElementById('quantityLabel');
+    const quantityInput = document.getElementById('quantity');
+    const durationGroup = document.getElementById('durationGroup');
+    const durationInput = document.getElementById('duration');
+    const postproduction = document.getElementById('postproduction');
+    const totalPrice = document.getElementById('totalPrice');
+    const breakdown = document.getElementById('breakdown');
+    const contactBtn = document.getElementById('contactBtn');
+
+    const PRICES = {
+      'levantamiento': { base: 120, per: 2, ppMult: 1.00 },
+      'imagen-basico': { per: 90, ppMult: 1.15 },
+      'imagen-pro': { per: 150, ppMult: 1.15 },
+      'imagen-premium': { per: 250, ppMult: 1.15 },
+      'video': { perSecond: 10, ppMult: 1.10 }
+    };
+
+    const fmt = (n) => new Intl.NumberFormat('es-ES', { 
+      style: 'currency', 
+      currency: 'EUR', 
+      maximumFractionDigits: 0 
+    }).format(n);
+
+    function updateFields() {
+      const v = serviceType.value;
+      if (!v) {
+        quantityGroup.classList.remove('show');
+        durationGroup.classList.remove('show');
+        totalPrice.textContent = '0€';
+        breakdown.textContent = '';
+        contactBtn.style.display = 'none';
+        return;
+      }
+
+      if (v === 'video') {
+        durationGroup.classList.add('show');
+        quantityGroup.classList.remove('show');
+      } else if (v === 'levantamiento') {
+        quantityGroup.classList.add('show');
+        quantityLabel.textContent = 'Metros cuadrados (m²)';
+        quantityInput.min = '10';
+        if (!quantityInput.value || Number(quantityInput.value) < 10) quantityInput.value = 50;
+        durationGroup.classList.remove('show');
+      } else {
+        quantityGroup.classList.add('show');
+        quantityLabel.textContent = 'Número de imágenes';
+        quantityInput.min = '1';
+        if (!quantityInput.value || Number(quantityInput.value) < 1) quantityInput.value = 1;
+        durationGroup.classList.remove('show');
+      }
+      calculate();
+    }
+
+    function calculate() {
+      const v = serviceType.value;
+      if (!v) {
+        totalPrice.textContent = '0€';
+        breakdown.textContent = '';
+        contactBtn.style.display = 'none';
+        return;
+      }
+
+      let price = 0;
+      let details = '';
+
+      if (v === 'video') {
+        const seconds = Math.max(10, Math.min(180, Number(durationInput.value || 0)));
+        price = seconds * PRICES.video.perSecond;
+        details = `Vídeo: ${seconds} segundos × ${fmt(PRICES.video.perSecond)}/segundo`;
+        
+        if (postproduction.checked) {
+          price *= PRICES.video.ppMult;
+          details += '<br>Postproducción: +15%';
+        }
+      } else if (v === 'levantamiento') {
+        const sqm = Math.max(10, Number(quantityInput.value || 0));
+        price = PRICES.levantamiento.base + (sqm * PRICES.levantamiento.per);
+        details = `Levantamiento 3D: Base ${fmt(PRICES.levantamiento.base)} + ${sqm}m² × ${fmt(PRICES.levantamiento.per)}/m²`;
+      } else {
+        const qty = Math.max(1, Number(quantityInput.value || 0));
+        const pack = PRICES[v];
+        price = qty * pack.per;
+        
+        let packName = '';
+        if (v === 'imagen-basico') packName = 'Básico';
+        else if (v === 'imagen-pro') packName = 'Profesional';
+        else if (v === 'imagen-premium') packName = 'Premium';
+        
+        details = `Render ${packName}: ${qty} imagen${qty > 1 ? 'es' : ''} × ${fmt(pack.per)}/imagen`;
+        
+        if (postproduction.checked) {
+          price *= pack.ppMult;
+          details += '<br>Postproducción avanzada: +15%';
+        }
+      }
+
+      const finalPrice = Math.round(price);
+      totalPrice.textContent = fmt(finalPrice);
+      breakdown.innerHTML = details;
+      contactBtn.style.display = 'block';
+    }
+
+    // Event listeners
+    ['change', 'input'].forEach(evt => {
+      serviceType.addEventListener(evt, updateFields);
+      quantityInput.addEventListener(evt, calculate);
+      durationInput.addEventListener(evt, calculate);
+      postproduction.addEventListener(evt, calculate);
+    });
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    const onScroll = () => {
+      if (window.scrollY > 10) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Initialize
+    updateFields();
+  </script>
+</body>
+</html>
