@@ -11,7 +11,7 @@
   <link rel="canonical" href="https://tusalvarenders.com">
   <meta name="theme-color" content="#0a0a0a">
 
-  <!-- FAVICON -->
+  <!-- FAVICON con vir guapa-->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='80'>🏛️</text></svg>">
 
   <!-- OPEN GRAPH -->
@@ -1440,109 +1440,6 @@
       },
     });
 
-    // Theme toggle
-    const header = document.getElementById('header');
-    const themeToggle = document.getElementById('themeToggle');
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navLinks = document.getElementById('navLinks');
 
-    const onScroll = () => {
-      if (window.scrollY > 10) header.classList.add('scrolled');
-      else header.classList.remove('scrolled');
-    };
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-
-    const THEME_KEY = 'tsr_theme';
-    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-    const savedTheme = localStorage.getItem(THEME_KEY);
-    const applyTheme = (mode) => {
-      document.body.classList.toggle('light', mode === 'light');
-      themeToggle.textContent = mode === 'light' ? '☀️' : '🌙';
-      themeToggle.setAttribute('aria-pressed', mode === 'light' ? 'true' : 'false');
-      localStorage.setItem(THEME_KEY, mode);
-      const metaTheme = document.querySelector('meta[name="theme-color"]');
-      if (metaTheme) metaTheme.setAttribute('content', mode === 'light' ? '#fafafa' : '#0a0a0a');
-    };
-    applyTheme(savedTheme ? savedTheme : (prefersLight ? 'light' : 'dark'));
-
-    themeToggle.addEventListener('click', () => {
-      const isLight = document.body.classList.contains('light');
-      applyTheme(isLight ? 'dark' : 'light');
-    });
-
-    mobileToggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('active');
-      mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-
-    navLinks.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A' && navLinks.classList.contains('active')) {
-        navLinks.classList.remove('active');
-        mobileToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // Formulario de contacto
-    const contactForm = document.getElementById('contactForm');
-    contactForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const data = new FormData(contactForm);
-      const name = data.get('name');
-      alert(`¡Gracias, ${name || '🙂'}! He recibido tu mensaje. Te responderé pronto por email.`);
-      contactForm.reset();
-    });
-  </script>
-  <script>
-  const formModern = document.getElementById('contactFormModern');
-  const submitBtn = formModern.querySelector('.btn-modern');
-  const originalText = submitBtn.innerHTML;
-
-  formModern.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    // Obtener datos
-    const name = document.getElementById('nameModern').value.trim();
-    const email = document.getElementById('emailModern').value.trim();
-    const project = document.getElementById('projectModern').value;
-    const message = document.getElementById('messageModern').value.trim();
-
-    if (!name || !email || !project || !message) {
-      showMessage('Por favor, completa todos los campos.', 'error');
-      return;
-    }
-
-    // Estado de envío
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `
-      <span>Enviando...</span>
-      <span class="btn-icon">⏳</span>
-    `;
-
-    // Simular envío (puedes conectar con EmailJS o backend aquí)
-    setTimeout(() => {
-      showMessage(`Gracias, <strong>${name}</strong>. Tu mensaje ha sido enviado. Te responderé a <strong>${email}</strong> en menos de 24h.`, 'success');
-      formModern.reset();
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
-    }, 1500);
-  });
-
-  function showMessage(text, type) {
-    const existing = formModern.querySelector('.form-message');
-    if (existing) existing.remove();
-
-    const msg = document.createElement('div');
-    msg.className = `form-message ${type}`;
-    msg.innerHTML = text;
-    formModern.insertBefore(msg, submitBtn);
-
-    // Auto-ocultar después de 5s
-    setTimeout(() => {
-      msg.style.opacity = '0';
-      setTimeout(() => msg.remove(), 300);
-    }, 5000);
-  }
-</script>
 </body>
 </html>
