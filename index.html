@@ -54,6 +54,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
   <style>
     :root {
       --bg-primary: #0a0a0a;
@@ -429,100 +432,213 @@
       font-weight: bold; font-size: 1.2rem;
     }
 
-    /* ---------- CONTACTO (coherente) ---------- */
-    #contacto .section-header { margin-bottom: var(--space-md); }
-
-    .contact-info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
-      margin-top: var(--space-sm);
-      margin-bottom: var(--space-lg);
+    /* ===== TESTIMONIOS CON CARRUSEL ===== */
+    .testimonios-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      margin-top: var(--space-md);
     }
-    .contact-card {
+    .google-placa img {
+      width: 120px;
+      height: auto;
+    }
+    .testimonios-carrusel {
+      width: 100%;
+      max-width: 900px;
+    }
+    .testimonio-card {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1.5rem;
-      transition: all var(--transition);
+      box-shadow: 0 10px 25px var(--shadow);
+      transition: transform 0.3s ease;
     }
-    .contact-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 18px 36px var(--shadow);
-      border-color: var(--accent);
+    .testimonio-card:hover {
+      transform: translateY(-5px);
     }
-    .contact-icon {
-      font-size: 1.75rem;
-      margin-bottom: 0.5rem;
+    .testimonio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
     }
-    .contact-card h3 {
+    .testimonio-header strong {
       font-family: var(--font-display);
       font-size: var(--fs-lg);
-      margin-bottom: 0.25rem;
       color: var(--text-primary);
     }
-    .contact-card a, .contact-card p {
+    .testimonio-header span {
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+    .testimonio-text {
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .testimonio-fecha {
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      text-align: right;
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+      color: var(--accent);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-primary);
+      user-select: none;
+    }
+    .faq-question:hover {
+      background: var(--bg-tertiary);
+    }
+    .faq-icon {
+      font-size: 1.5rem;
+      color: var(--accent);
+      transition: transform var(--transition);
+    }
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 1.5rem;
       color: var(--text-secondary);
       font-size: var(--fs-sm);
+      line-height: 1.6;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: var(--space-lg) clamp(1rem, 4vw, 3rem);
+      margin-top: var(--space-xl);
+    }
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: var(--fs-xl);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .footer-tagline {
+      font-size: var(--fs-sm);
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .footer-links {
+      list-style: none;
+    }
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-links a {
+      color: var(--text-secondary);
       text-decoration: none;
-      word-break: break-word;
+      font-size: var(--fs-sm);
+      transition: color var(--transition);
     }
-    .contact-card a:hover {
+    .footer-links a:hover {
       color: var(--accent);
-      text-decoration: underline;
     }
-    .contact-note {
-      margin-top: 0.5rem;
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2rem;
       font-size: var(--fs-xs);
       color: var(--text-muted);
     }
 
-    .contact-form-wrapper {
+    /* ===== CHATBOT ===== */
+    .chatbot-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+    .chatbot-button {
+      background: var(--accent);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: all var(--transition);
+    }
+    .chatbot-button:hover {
+      transform: scale(1.1);
+    }
+    .chatbot-window {
+      display: none;
+      position: absolute;
+      bottom: 70px;
+      right: 0;
+      width: 300px;
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: clamp(1rem, 3vw, 2rem);
       box-shadow: 0 10px 30px var(--shadow);
+      overflow: hidden;
     }
-    .contact-form .form-row {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+    .chatbot-header {
+      background: var(--accent);
+      color: var(--bg-primary);
+      padding: 1rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    @media (max-width: 640px) {
-      .contact-form .form-row { grid-template-columns: 1fr; }
+    .chatbot-close {
+      background: none;
+      border: none;
+      color: var(--bg-primary);
+      font-size: 1.2rem;
+      cursor: pointer;
     }
-    .contact-form .form-group {
-      display: flex; flex-direction: column; gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .contact-form label {
+    .chatbot-body {
+      padding: 1rem;
       font-size: var(--fs-sm);
       color: var(--text-secondary);
-    }
-    .contact-form input,
-    .contact-form select,
-    .contact-form textarea {
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 0.9rem;
-      font-size: var(--fs-sm);
-      outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
-    }
-    .contact-form input::placeholder,
-    .contact-form textarea::placeholder { color: var(--text-muted); }
-    .contact-form input:focus,
-    .contact-form select:focus,
-    .contact-form textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(201,168,124,0.15);
-    }
-    .contact-form button.btn {
-      width: 100%;
-      justify-content: center;
     }
 
     @media (max-width: 768px) {
@@ -537,6 +653,305 @@
       }
       .pricing-card.featured {transform: scale(1);}
     }
+
+    /* ===== CONTACTO MODERNO ===== */
+.contacto-modern {
+  position: relative;
+  padding: var(--space-xl) clamp(1rem, 4vw, 3rem);
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.contacto-background {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 10% 20%, rgba(201, 168, 124, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 90% 80%, rgba(201, 168, 124, 0.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.contacto-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contacto-header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.contacto-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: var(--space-lg);
+}
+
+@media (max-width: 768px) {
+  .contacto-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Info cards */
+.info-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.info-card:hover::before {
+  opacity: 0.1;
+}
+
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px var(--shadow);
+  border-color: var(--accent);
+}
+
+.info-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover .info-icon {
+  transform: scale(1.2);
+}
+
+.info-card h3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.info-card a,
+.info-card p {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+}
+
+.info-card a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.info-note {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* Formulario moderno */
+.contact-form-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row-modern {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .form-row-modern {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group-modern label {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.form-group-modern input,
+.form-group-modern select,
+.form-group-modern textarea {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  font-size: var(--fs-sm);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-group-modern input:focus,
+.form-group-modern select:focus,
+.form-group-modern textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+}
+
+.btn-modern {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: var(--radius);
+  padding: 1rem 2rem;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-modern:hover {
+  background: var(--accent-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(201, 168, 124, 0.3);
+}
+
+.btn-modern:active {
+  transform: translateY(0);
+}
+
+.btn-icon {
+  transition: transform var(--transition);
+}
+
+.btn-modern:hover .btn-icon {
+  transform: translateX(4px);
+}
+
+/* Mapa */
+.contacto-mapa {
+  margin-top: var(--space-lg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+/* Mensaje de feedback */
+.form-message {
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  margin-bottom: 1rem;
+  transition: opacity 1s ease;
+}
+
+.form-message.success {
+  background: rgba(201, 168, 124, 0.15);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.form-message.error {
+  background: rgba(255, 100, 100, 0.1);
+  color: #ff6464;
+  border: 1px solid #ff6464;
+}
+
+/* ===== LÍNEA FINAL CON LOGO SVG ===== */
+/* ===== FOOTER FINAL 3 COLUMNAS ===== */
+.footer-final {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  border-top: 1px solid var(--border);
+  background: var(--bg-secondary);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-final-left,
+.footer-final-center,
+.footer-final-right {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+}
+
+.footer-final-left {
+  justify-content: flex-start;
+}
+
+.footer-final-center {
+  justify-content: center;
+}
+
+.footer-final-right {
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.footer-logo-final {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.footer-logo-final:hover {
+  transform: scale(1.1);
+}
+
+.footer-final-right a {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-final-right a:hover {
+  color: var(--accent);
+}
+
+.footer-final-left p {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* Responsive: apila en móviles */
+@media (max-width: 600px) {
+  .footer-final {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-final-left,
+  .footer-final-center,
+  .footer-final-right {
+    justify-content: center;
+  }
+}
   </style>
 </head>
 <body>
@@ -646,7 +1061,6 @@
       </div>
     </section>
 
-    <!-- PRECIOS (única vez) -->
     <section id="precios">
       <div class="section-header">
         <p class="section-subtitle">Inversión</p>
@@ -697,47 +1111,44 @@
       </div>
     </section>
 
-   
-
-    <section id="testimonios">
+    <section id="testimonios" style="background: var(--bg-secondary);">
       <div class="section-header">
         <p class="section-subtitle">Opiniones</p>
-        <h2 class="section-title">Lo que dicen mis clientes</h2>
-        <p class="section-description">Experiencias reales de arquitectos, promotores y particulares</p>
+        <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+        <p class="section-description">A base de 123 reseñas en Google</p>
       </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Virginia transformó nuestro proyecto en imágenes increíbles. Los renders fueron clave para conseguir la aprobación de nuestros clientes. Profesionalidad y calidad máxima."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">JM</div>
-            <div>
-              <div class="author-name">Juan Martínez</div>
-              <div class="author-role">Arquitecto</div>
-            </div>
-          </div>
+
+      <div class="testimonios-wrapper">
+        <div class="google-placa">
+          <img src="https://lavtion.com/wp-content/uploads/2024/07/Placa-Google-Lavtion-123-resenas-1024x1024.png" alt="Google 5 estrellas" loading="lazy">
         </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Necesitábamos renders para vender viviendas sobre plano. El resultado superó nuestras expectativas. Servicio rápido y atención excelente."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">LS</div>
-            <div>
-              <div class="author-name">Laura Sánchez</div>
-              <div class="author-role">Promotora Inmobiliaria</div>
+
+        <div class="testimonios-carrusel swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="testimonio-card">
+                <div class="testimonio-header">
+                  <strong>Sergio Torres</strong>
+                  <span>★★★★★</span>
+                </div>
+                <p class="testimonio-text">Excelente servicio. El equipo de Lavtion es muy creativo y profesional. Nuestro hogar luce maravilloso.</p>
+                <p class="testimonio-fecha">Julio 19, 2023</p>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Quería visualizar mi reforma antes de empezar. Los renders me ayudaron a tomar decisiones y evitar errores costosos. Totalmente recomendable."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">CR</div>
-            <div>
-              <div class="author-name">Carlos Ruiz</div>
-              <div class="author-role">Cliente Particular</div>
+            <div class="swiper-slide">
+              <div class="testimonio-card">
+                <div class="testimonio-header">
+                  <strong>Carmen Morales</strong>
+                  <span>★★★★★</span>
+                </div>
+                <p class="testimonio-text">Servicio impecable de Lavtion. Desde la arquitectura hasta el interiorismo, todo excelente.</p>
+                <p class="testimonio-fecha">Septiembre 15, 2021</p>
+              </div>
             </div>
+            <!-- Puedes duplicar más slides si tienes más reseñas -->
           </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
       </div>
     </section>
@@ -815,51 +1226,57 @@
       </div>
     </section>
 
-    <!-- CONTACTO -->
-    <section id="contacto">
-      <div class="section-header">
-        <p class="section-subtitle">Hablemos</p>
-        <h2 class="section-title">Contacto</h2>
-        <p class="section-description">¿Tienes un proyecto en mente? Cuéntame y te preparo un presupuesto personalizado</p>
-      </div>
+    <section id="contacto" class="contacto-modern">
+  <div class="contacto-background"></div>
+  <div class="contacto-container">
+    <div class="contacto-header">
+      <p class="section-subtitle">Hablemos</p>
+      <h2 class="section-title">Conectemos</h2>
+      <p class="section-description">Cuéntame tu idea y transformemos tu proyecto en imágenes que enamoren.</p>
+    </div>
 
-      <div class="contact-info-grid">
-        <div class="contact-card">
-          <div class="contact-icon">📧</div>
+    <div class="contacto-grid">
+      <!-- Info de contacto -->
+      <div class="contacto-info">
+        <div class="info-card">
+          <div class="info-icon">📧</div>
           <h3>Email</h3>
           <a href="mailto:vfernandezsalva@gmail.com">vfernandezsalva@gmail.com</a>
-          <p class="contact-note">Respondo en menos de 24h</p>
+          <p class="info-note">Respuesta en menos de 24h</p>
         </div>
-        <div class="contact-card">
-          <div class="contact-icon">📍</div>
+
+        <div class="info-card">
+          <div class="info-icon">📍</div>
           <h3>Ubicación</h3>
           <p>Málaga, Andalucía</p>
-          <p class="contact-note">Trabajo online con toda España</p>
+          <p class="info-note">Trabajo online con toda España</p>
         </div>
-        <div class="contact-card">
-          <div class="contact-icon">💼</div>
+
+        <div class="info-card">
+          <div class="info-icon">💼</div>
           <h3>LinkedIn</h3>
           <a href="https://www.linkedin.com/in/virginiafdezsalva" target="_blank" rel="noopener">Virginia Fernández Salva</a>
-          <p class="contact-note">Conéctate profesionalmente</p>
+          <p class="info-note">Conéctate profesionalmente</p>
         </div>
       </div>
 
-      <div class="contact-form-wrapper">
-        <form class="contact-form" id="contactForm" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Nombre *</label>
-              <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+      <!-- Formulario -->
+      <div class="contacto-formulario">
+        <form class="contact-form-modern" id="contactFormModern" novalidate>
+          <div class="form-row-modern">
+            <div class="form-group-modern">
+              <label for="nameModern">Tu nombre *</label>
+              <input type="text" id="nameModern" name="name" placeholder="Ej: Laura" required>
             </div>
-            <div class="form-group">
-              <label for="email">Email *</label>
-              <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+            <div class="form-group-modern">
+              <label for="emailModern">Tu email *</label>
+              <input type="email" id="emailModern" name="email" placeholder="Ej: laura@email.com" required>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="project">Tipo de proyecto *</label>
-            <select id="project" name="project" required>
+          <div class="form-group-modern">
+            <label for="projectModern">Tipo de proyecto *</label>
+            <select id="projectModern" name="project" required>
               <option value="">Selecciona una opción</option>
               <option value="residencial">Vivienda Residencial</option>
               <option value="interiorismo">Interiorismo</option>
@@ -869,158 +1286,160 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="message">Cuéntame sobre tu proyecto *</label>
-            <textarea id="message" name="message" rows="5" placeholder="Plazos, número de imágenes, estilo, materiales..." required></textarea>
+          <div class="form-group-modern">
+            <label for="messageModern">Cuéntame tu proyecto *</label>
+            <textarea id="messageModern" name="message" rows="5" placeholder="Plazos, número de imágenes, estilo, materiales..." required></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+          <button type="submit" class="btn btn-modern">
+            <span>Enviar mensaje</span>
+            <span class="btn-icon">→</span>
+          </button>
         </form>
       </div>
-    </section>
+    </div>
+
+    <!-- Mapa opcional -->
+    <div class="contacto-mapa">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d425121.420421145!2d-4.796193368749999!3d36.719648900000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f78cf1d6f0a7%3A0xc2fb5c1a3d5c7a7c!2sMálaga%2C%20Spain!5e0!3m2!1sen!2ses!4v1699999999999"
+        width="100%"
+        height="300"
+        style="border:0; border-radius: var(--radius);"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+
   </main>
 
-  <!-- ======== JS ======== -->
+  <footer>
+  <div class="footer-content">
+    <div>
+      <div class="footer-logo">tusalvarenders</div>
+      <p class="footer-tagline">Renders arquitectónicos profesionales en Málaga y toda España.</p>
+      <p>© 2025 tusalvarenders. Todos los derechos reservados.</p>
+    </div>
+    <div>
+      <h4 style="margin-bottom: 1rem; font-size: var(--fs-base);">Enlaces</h4>
+      <ul class="footer-links">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#precios">Precios</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="margin-bottom: 1rem; font-size: var(--fs-base);">Redes</h4>
+      <ul class="footer-links">
+        <li><a href="https://www.linkedin.com/in/virginiafdezsalva" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://instagram.com/tusalvarenders" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="margin-bottom: 1rem; font-size: var(--fs-base);">Contacto</h4>
+      <ul class="footer-links">
+        <li><a href="mailto:vfernandezsalva@gmail.com">vfernandezsalva@gmail.com</a></li>
+        <li>Málaga, Andalucía</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ✅ LÍNEA FINAL CON ICONO SVG -->
+  <!-- FOOTER FINAL CON 3 COLUMNAS -->
+<div class="footer-final">
+  <!-- Izquierda: Copyright -->
+  <div class="footer-final-left">
+    <p>Copiright © 2025 tusalvarenders</p>
+  </div>
+
+  <!-- Centro: Logo -->
+  <div class="footer-final-center">
+    <a href="/" aria-label="Home">
+      <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a87c'><path d='M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z'/></svg>" alt="Logo tusalvarenders" class="footer-logo-final">
+    </a>
+  </div>
+
+  <!-- Derecha: Iconos sociales -->
+  <div class="footer-final-right">
+    <a href="https://facebook.com/tusalvarenders" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+    <a href="https://linkedin.com/in/virginiafdezsalva" target="_blank" rel="noopener" aria-label="LinkedIn">💼</a>
+    <a href="https://instagram.com/tusalvarenders" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+  </div>
+</div>
+</footer>
+
+  <!-- ===== CHATBOT ===== -->
+  <div class="chatbot-widget">
+    <button class="chatbot-button" id="chatbotToggle" aria-label="Abrir chat">💬</button>
+    <div class="chatbot-window" id="chatbotWindow">
+      <div class="chatbot-header">
+        <span>¿Tienes dudas?</span>
+        <button class="chatbot-close" id="chatbotClose">×</button>
+      </div>
+      <div class="chatbot-body">
+        <p>Hola 👋 ¿En qué puedo ayudarte?</p>
+        <ul style="margin-top: 1rem; padding-left: 1rem; font-size: 0.875rem;">
+          <li><a href="#faq" style="color: var(--accent);">Ver preguntas frecuentes</a></li>
+          <li><a href="presupuesto.html" style="color: var(--accent);">Calcular presupuesto</a></li>
+          <li><a href="mailto:vfernandezsalva@gmail.com" style="color: var(--accent);">Enviar email</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
   <script>
-    (function () {
-      const header = document.getElementById('header');
-      const themeToggle = document.getElementById('themeToggle');
-      const mobileToggle = document.getElementById('mobileToggle');
-      const navLinks = document.getElementById('navLinks');
-
-      // ----- Header shadow on scroll -----
-      const onScroll = () => {
-        if (window.scrollY > 10) header.classList.add('scrolled');
-        else header.classList.remove('scrolled');
-      };
-      window.addEventListener('scroll', onScroll);
-      onScroll();
-
-      // ----- Theme (persist in localStorage) -----
-      const THEME_KEY = 'tsr_theme';
-      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-      const savedTheme = localStorage.getItem(THEME_KEY);
-      const applyTheme = (mode) => {
-        document.body.classList.toggle('light', mode === 'light');
-        themeToggle.textContent = mode === 'light' ? '☀️' : '🌙';
-        themeToggle.setAttribute('aria-pressed', mode === 'light' ? 'true' : 'false');
-        localStorage.setItem(THEME_KEY, mode);
-        // Update meta theme-color for mobile UI
-        const metaTheme = document.querySelector('meta[name="theme-color"]');
-        if (metaTheme) metaTheme.setAttribute('content', mode === 'light' ? '#fafafa' : '#0a0a0a');
-      };
-      applyTheme(savedTheme ? savedTheme : (prefersLight ? 'light' : 'dark'));
-
-      themeToggle.addEventListener('click', () => {
-        const isLight = document.body.classList.contains('light');
-        applyTheme(isLight ? 'dark' : 'light');
+    // FAQ acordeón
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        q.parentElement.classList.toggle('active');
       });
+    });
 
-      // ----- Mobile menu toggle -----
-      mobileToggle.addEventListener('click', () => {
-        const isOpen = navLinks.classList.toggle('active');
-        mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-      // Close menu on link click (mobile)
-      navLinks.addEventListener('click', (e) => {
-        if (e.target.tagName === 'A' && navLinks.classList.contains('active')) {
-          navLinks.classList.remove('active');
-          mobileToggle.setAttribute('aria-expanded', 'false');
-        }
-      });
+    // Chatbot toggle
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    const chatbotClose = document.getElementById('chatbotClose');
 
-      // ----- Calculator -----
-      const serviceType = document.getElementById('serviceType');
-      const quantityGroup = document.getElementById('quantityGroup');
-      const quantityLabel = document.getElementById('quantityLabel');
-      const quantityInput = document.getElementById('quantity');
-      const durationGroup = document.getElementById('durationGroup');
-      const durationInput = document.getElementById('duration');
-      const postproduction = document.getElementById('postproduction');
-      const totalPrice = document.getElementById('totalPrice');
+    chatbotToggle.addEventListener('click', () => {
+      const isOpen = chatbotWindow.style.display === 'block';
+      chatbotWindow.style.display = isOpen ? 'none' : 'block';
+      chatbotToggle.setAttribute('aria-pressed', isOpen ? 'false' : 'true');
+    });
 
-      const PRICES = {
-        // Puedes ajustar estos valores cuando quieras
-        'levantamiento': { base: 120, per: 2, ppMult: 1.00 },        // base + €/m²
-        'imagen-basico': { per: 90, ppMult: 1.15 },                  // €/imagen
-        'imagen-pro': { per: 150, ppMult: 1.15 },                    // €/imagen
-        'imagen-premium': { per: 250, ppMult: 1.15 },                // €/imagen
-        'video': { perSecond: 10, ppMult: 1.10 }                     // €/segundo
-      };
+    chatbotClose.addEventListener('click', () => {
+      chatbotWindow.style.display = 'none';
+      chatbotToggle.setAttribute('aria-pressed', 'false');
+    });
 
-      const fmt = (n) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+    // Swiper para testimonios
+    const swiper = new Swiper('.testimonios-carrusel', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+      },
+    });
 
-      function updateFields() {
-        const v = serviceType.value;
-        if (!v) {
-          quantityGroup.style.display = 'none';
-          durationGroup.style.display = 'none';
-          totalPrice.textContent = '0€';
-          return;
-        }
-        if (v === 'video') {
-          durationGroup.style.display = '';
-          quantityGroup.style.display = 'none';
-        } else if (v === 'levantamiento') {
-          quantityGroup.style.display = '';
-          quantityLabel.textContent = 'Metros cuadrados (m²)';
-          quantityInput.min = '10';
-          if (!quantityInput.value || Number(quantityInput.value) < 10) quantityInput.value = 50;
-          durationGroup.style.display = 'none';
-        } else {
-          quantityGroup.style.display = '';
-          quantityLabel.textContent = 'Número de imágenes';
-          quantityInput.min = '1';
-          if (!quantityInput.value || Number(quantityInput.value) < 1) quantityInput.value = 1;
-          durationGroup.style.display = 'none';
-        }
-        calculate();
-      }
 
-      function calculate() {
-        const v = serviceType.value;
-        if (!v) { totalPrice.textContent = '0€'; return; }
-
-        let price = 0;
-        if (v === 'video') {
-          const seconds = Math.max(10, Math.min(180, Number(durationInput.value || 0)));
-          price = seconds * PRICES.video.perSecond;
-          if (postproduction.checked) price *= PRICES.video.ppMult;
-        } else if (v === 'levantamiento') {
-          const sqm = Math.max(10, Number(quantityInput.value || 0));
-          price = PRICES.levantamiento.base + (sqm * PRICES.levantamiento.per);
-          // postproducción no aplica al levantamiento (no cambia)
-        } else {
-          const qty = Math.max(1, Number(quantityInput.value || 0));
-          const pack = PRICES[v];
-          price = qty * pack.per;
-          if (postproduction.checked) price *= pack.ppMult;
-        }
-
-        totalPrice.textContent = fmt(Math.round(price));
-      }
-
-      ['change', 'input'].forEach(evt => {
-        serviceType.addEventListener(evt, updateFields);
-        quantityInput.addEventListener(evt, calculate);
-        durationInput.addEventListener(evt, calculate);
-        postproduction.addEventListener(evt, calculate);
-      });
-
-      // init
-      updateFields();
-
-      // ----- Simple form guard (solo evita envío real) -----
-      const contactForm = document.getElementById('contactForm');
-      contactForm.addEventListener('submit', function (e) {
-        // Aquí podrías integrar EmailJS, Formspree o backend propio.
-        e.preventDefault();
-        const data = new FormData(contactForm);
-        const name = data.get('name');
-        alert(`¡Gracias, ${name || '🙂'}! He recibido tu mensaje. Te responderé pronto por email.`);
-        contactForm.reset();
-      });
-    })();
-  </script> 
 </body>
 </html>
